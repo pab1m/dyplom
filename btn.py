@@ -110,3 +110,90 @@ btn_yoru = KeyboardButton(text="YORU")
 btn_neon = KeyboardButton(text="NEON")
 duelist = ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
 duelist.add(btn_phoenix, btn_reyna, btn_jett, btn_raze, btn_yoru, btn_neon).add(btn_agents)
+
+
+info_phoenix = InlineKeyboardMarkup(row_width=2)
+btn_info_phoenix = InlineKeyboardButton(text="Біографія PHOENIX", callback_data='bio_phoenix')
+btn_abilities_phoenix = InlineKeyboardButton(text="Здібності PHOENIX", callback_data='abilities_phoenix')
+info_phoenix.add(btn_info_phoenix, btn_abilities_phoenix)
+
+abilities_phoenix = InlineKeyboardMarkup(row_width=2)
+btn_phoenix_q = InlineKeyboardButton(text="Кручена подача (Q)", callback_data='phoenix_q')
+btn_phoenix_e = InlineKeyboardButton(text="Гарячі руки (E)", callback_data='phoenix_e')
+btn_phoenix_c = InlineKeyboardButton(text="Пожежа (C)", callback_data='phoenix_c')
+btn_phoenix_x = InlineKeyboardButton(text="Повернення (X)", callback_data='phoenix_x')
+abilities_phoenix.add(btn_phoenix_q, btn_phoenix_e, btn_phoenix_c, btn_phoenix_x)
+
+
+info_reyna = InlineKeyboardMarkup(row_width=2)
+btn_info_reyna = InlineKeyboardButton(text="Біографія REYNA", callback_data='bio_reyna')
+btn_abilities_reyna = InlineKeyboardButton(text="Здібності REYNA", callback_data='abilities_reyna')
+info_reyna.add(btn_info_reyna, btn_abilities_reyna)
+
+abilities_reyna = InlineKeyboardMarkup(row_width=2)
+btn_reyna_q = InlineKeyboardButton(text="Поглинання (Q)", callback_data='reyna_q')
+btn_reyna_e = InlineKeyboardButton(text="Вигнання (E)", callback_data='reyna_e')
+btn_reyna_c = InlineKeyboardButton(text="Злісний погляд (C)", callback_data='reyna_c')
+btn_reyna_x = InlineKeyboardButton(text="Імператриця (X)", callback_data='reyna_x')
+abilities_reyna.add(btn_reyna_q, btn_reyna_e, btn_reyna_c, btn_reyna_x)
+
+
+info_jett = InlineKeyboardMarkup(row_width=2)
+btn_info_jett = InlineKeyboardButton(text="Біографія JETT", callback_data='bio_jett')
+btn_abilities_jett = InlineKeyboardButton(text="Здібності JETT", callback_data='abilities_jett')
+info_jett.add(btn_info_jett, btn_abilities_jett)
+
+abilities_jett = InlineKeyboardMarkup(row_width=2)
+btn_jett_q = InlineKeyboardButton(text="Підйом (Q)", callback_data='jett_q')
+btn_jett_e = InlineKeyboardButton(text="Попутний вітер (E)", callback_data='jett_e')
+btn_jett_c = InlineKeyboardButton(text="Вихор (C)", callback_data='jett_c')
+btn_jett_x = InlineKeyboardButton(text="Буря кинжалів (X)", callback_data='jett_x')
+abilities_jett.add(btn_jett_q, btn_jett_e, btn_jett_c, btn_jett_x)
+
+
+info_raze = InlineKeyboardMarkup(row_width=2)
+btn_info_raze = InlineKeyboardButton(text="Біографія RAZE", callback_data='bio_raze')
+btn_abilities_raze = InlineKeyboardButton(text="Здібності RAZE", callback_data='abilities_raze')
+info_raze.add(btn_info_raze, btn_abilities_raze)
+
+abilities_raze = InlineKeyboardMarkup(row_width=2)
+btn_raze_q = InlineKeyboardButton(text="Вибуховий ранець (Q)", callback_data='raze_q')
+btn_raze_e = InlineKeyboardButton(text="Касетна граната (E)", callback_data='raze_e')
+btn_raze_c = InlineKeyboardButton(text="Бум бот (C)", callback_data='raze_c')
+btn_raze_x = InlineKeyboardButton(text="Стоп-кадр (X)", callback_data='raze_x')
+abilities_raze.add(btn_raze_q, btn_raze_e, btn_raze_c, btn_raze_x)
+
+
+info_yoru = InlineKeyboardMarkup(row_width=2)
+btn_info_yoru = InlineKeyboardButton(text="Біографія YORU", callback_data='bio_yoru')
+btn_abilities_yoru = InlineKeyboardButton(text="Здібності YORU", callback_data='abilities_yoru')
+info_yoru.add(btn_info_yoru, btn_abilities_yoru)
+
+abilities_yoru = InlineKeyboardMarkup(row_width=2)
+btn_yoru_q = InlineKeyboardButton(text="Осліплена сторона (Q)", callback_data='yoru_q')
+btn_yoru_e = InlineKeyboardButton(text="Незваний гість (E)", callback_data='yoru_e')
+btn_yoru_c = InlineKeyboardButton(text="Фейк (C)", callback_data='yoru_c')
+btn_yoru_x = InlineKeyboardButton(text="Просторовий дрифт (X)", callback_data='yoru_x')
+abilities_yoru.add(btn_yoru_q, btn_yoru_e, btn_yoru_c, btn_yoru_x)
+
+
+info_neon = InlineKeyboardMarkup(row_width=2)
+btn_info_neon = InlineKeyboardButton(text="Біографія NEON", callback_data='bio_neon')
+btn_abilities_neon = InlineKeyboardButton(text="Здібності NEON", callback_data='abilities_neon')
+info_neon.add(btn_info_neon, btn_abilities_neon)
+
+abilities_neon = InlineKeyboardMarkup(row_width=2)
+btn_neon_q = InlineKeyboardButton(text="Стрибучий снаряд (Q)", callback_data='neon_q')
+btn_neon_e = InlineKeyboardButton(text="Підвищена швидкість (E)", callback_data='neon_e')
+btn_neon_c = InlineKeyboardButton(text="Захисний тунель (C)", callback_data='neon_c')
+btn_neon_x = InlineKeyboardButton(text="На повну потужність (X)", callback_data='neon_x')
+abilities_neon.add(btn_neon_q, btn_neon_e, btn_neon_c, btn_neon_x)
+
+
+btn_sage = KeyboardButton(text="SAGE")
+btn_cypher = KeyboardButton(text="CYPHER")
+btn_kj = KeyboardButton(text="KILLJOY")
+btn_chamber = KeyboardButton(text="CHAMBER")
+sentinel = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+sentinel.add(btn_sage, btn_cypher, btn_kj, btn_chamber).add(btn_agents)
+
