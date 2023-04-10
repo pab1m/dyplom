@@ -179,7 +179,7 @@ async def test(message: types.Message):
         with open("agents_images/brimstone.png", 'rb') as brim:
             await bot.send_photo(chat_id=callback.from_user.id, photo=brim)
 
-        await callback.message.answer(text='опис ульти')
+        await callback.message.answer(text='опис ульти erghjegheruhghreiuhiuehveuihviuh')
         await callback.message.answer(text='Оберіть здібність:', reply_markup=abilities_brim)
         await callback.answer()
 
