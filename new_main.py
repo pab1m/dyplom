@@ -1,10 +1,12 @@
 import os
-import requests
 from aiogram.dispatcher.filters import Text
+import requests
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InputMediaPhoto
+from aiogram.utils.exceptions import InvalidQueryID
+
 from btn import *
 from all_inf import *
 
@@ -627,6 +629,528 @@ async def neon(message: types.Message):
 @dp.message_handler(lambda message: "ВАРТОВИЙ/СТРАЖ (SENTINEL)" in message.text)
 async def sentinels(messsage: types.Message):
     await bot.send_message(messsage.from_user.id, "ВАРТОВИЙ/СТРАЖ (SENTINEL)", reply_markup=sentinel)
+
+
+@dp.message_handler(text=['SAGE'])
+async def sage(message: types.Message):
+    photo = types.InputFile('agents_images/sage.png')
+    await bot.send_photo(chat_id=message.from_user.id, photo=photo)
+    photo.clean()
+    await message.answer('Оберіть категорію для ознайомлення:', reply_markup=info_sage)
+
+    @dp.callback_query_handler(text='bio_sage')
+    async def bio_sage(callback: types.CallbackQuery):
+        Sage_bio = Sage().bio()
+        await callback.message.answer(Sage_bio)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='abilities_sage')
+    async def ab_sage(callback: types.CallbackQuery):
+        await callback.message.answer('Оберіть здібність:', reply_markup=abilities_sage)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='sage_q')
+    async def ab_sage_q(callback: types.CallbackQuery):
+        with open("abilities/sage/sage2.mp4", 'rb') as sage:
+            await bot.send_video(chat_id=callback.from_user.id, video=sage)
+        ab = Sage().abilities()
+        await callback.message.answer(ab['q'], reply_markup=abilities_sage)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='sage_e')
+    async def ab_sage_e(callback: types.CallbackQuery):
+        with open("abilities/sage/sage1.mp4", 'rb') as sage:
+            await bot.send_video(chat_id=callback.from_user.id, video=sage)
+        ab = Sage().abilities()
+        await callback.message.answer(ab['e'], reply_markup=abilities_sage)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='sage_c')
+    async def ab_sage_c(callback: types.CallbackQuery):
+        with open("abilities/sage/sage3.mp4", 'rb') as sage:
+            await bot.send_video(chat_id=callback.from_user.id, video=sage)
+        ab = Sage().abilities()
+        await callback.message.answer(ab['c'], reply_markup=abilities_sage)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='sage_x')
+    async def ab_sage_x(callback: types.CallbackQuery):
+        with open("abilities/sage/sage4.mp4", 'rb') as sage:
+            await bot.send_video(chat_id=callback.from_user.id, video=sage)
+        ab = Sage().abilities()
+        await callback.message.answer(ab['x'], reply_markup=abilities_sage)
+        await callback.answer()
+
+
+@dp.message_handler(text=['CYPHER'])
+async def cypher(message: types.Message):
+    photo = types.InputFile('agents_images/cypher.png')
+    await bot.send_photo(chat_id=message.from_user.id, photo=photo)
+    photo.clean()
+    await message.answer('Оберіть категорію для ознайомлення:', reply_markup=info_cypher)
+
+    @dp.callback_query_handler(text='bio_cypher')
+    async def bio_cypher(callback: types.CallbackQuery):
+        Cypher_bio = Cypher().bio()
+        await callback.message.answer(Cypher_bio, parse_mode='html')
+        await callback.answer()
+
+    @dp.callback_query_handler(text='abilities_cypher')
+    async def ab_cypher(callback: types.CallbackQuery):
+        await callback.message.answer('Оберіть здібність:', reply_markup=abilities_cypher)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='cypher_q')
+    async def ab_cypher_q(callback: types.CallbackQuery):
+        with open("abilities/cypher/chypher2.mp4", 'rb') as cypher:
+            await bot.send_video(chat_id=callback.from_user.id, video=cypher)
+        ab = Cypher().abilities()
+        await callback.message.answer(ab['q'], reply_markup=abilities_cypher)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='cypher_e')
+    async def ab_cypher_e(callback: types.CallbackQuery):
+        with open("abilities/cypher/chypher3.mp4", 'rb') as cypher:
+            await bot.send_video(chat_id=callback.from_user.id, video=cypher)
+        ab = Cypher().abilities()
+        await callback.message.answer(ab['e'], reply_markup=abilities_cypher)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='cypher_c')
+    async def ab_cypher_c(callback: types.CallbackQuery):
+        with open("abilities/cypher/chypher1.mp4", 'rb') as cypher:
+            await bot.send_video(chat_id=callback.from_user.id, video=cypher)
+        ab = Cypher().abilities()
+        await callback.message.answer(ab['c'], reply_markup=abilities_cypher)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='cypher_x')
+    async def ab_cypher_x(callback: types.CallbackQuery):
+        with open("abilities/cypher/chypher4.mp4", 'rb') as cypher:
+            await bot.send_video(chat_id=callback.from_user.id, video=cypher)
+        ab = Cypher().abilities()
+        await callback.message.answer(ab['x'], reply_markup=abilities_cypher)
+        await callback.answer()
+
+
+@dp.message_handler(text=['KILLJOY'])
+async def killjoy(message: types.Message):
+    photo = types.InputFile('agents_images/killjoy.png')
+    await bot.send_photo(chat_id=message.from_user.id, photo=photo)
+    photo.clean()
+    await message.answer('Оберіть категорію для ознайомлення:', reply_markup=info_kj)
+
+    @dp.callback_query_handler(text='bio_kj')
+    async def bio_kj(callback: types.CallbackQuery):
+        Killjoy_bio = Killjoy().bio()
+        await callback.message.answer(Killjoy_bio, parse_mode='html')
+        await callback.answer()
+
+    @dp.callback_query_handler(text='abilities_kj')
+    async def ab_kj(callback: types.CallbackQuery):
+        await callback.message.answer('Оберіть здібність:', reply_markup=abilities_kj)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='kj_q')
+    async def ab_kj_q(callback: types.CallbackQuery):
+        with open("abilities/killjoy/kj2.mp4", 'rb') as kj:
+            await bot.send_video(chat_id=callback.from_user.id, video=kj)
+        ab = Killjoy().abilities()
+        await callback.message.answer(ab['q'], reply_markup=abilities_kj)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='kj_e')
+    async def ab_kj_e(callback: types.CallbackQuery):
+        with open("abilities/killjoy/kj1.mp4", 'rb') as kj:
+            await bot.send_video(chat_id=callback.from_user.id, video=kj)
+        ab = Killjoy().abilities()
+        await callback.message.answer(ab['e'], reply_markup=abilities_kj)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='kj_c')
+    async def ab_kj_c(callback: types.CallbackQuery):
+        with open("abilities/killjoy/kj3.mp4", 'rb') as kj:
+            await bot.send_video(chat_id=callback.from_user.id, video=kj)
+        ab = Killjoy().abilities()
+        await callback.message.answer(ab['c'], reply_markup=abilities_kj)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='kj_x')
+    async def ab_kj_x(callback: types.CallbackQuery):
+        with open("abilities/killjoy/kj4.mp4", 'rb') as kj:
+            await bot.send_video(chat_id=callback.from_user.id, video=kj)
+        ab = Killjoy().abilities()
+        await callback.message.answer(ab['x'], reply_markup=abilities_kj)
+        await callback.answer()
+
+
+@dp.message_handler(text=['CHAMBER'])
+async def chamber(message: types.Message):
+    photo = types.InputFile('agents_images/chamber.png')
+    await bot.send_photo(chat_id=message.from_user.id, photo=photo)
+    photo.clean()
+    await message.answer('Оберіть категорію для ознайомлення:', reply_markup=info_chamber)
+
+    @dp.callback_query_handler(text='bio_chamber')
+    async def bio_chamber(callback: types.CallbackQuery):
+        Chamber_bio = Chamber().bio()
+        await callback.message.answer(Chamber_bio, parse_mode='html')
+        await callback.answer()
+
+    @dp.callback_query_handler(text='abilities_chamber')
+    async def ab_chamber(callback: types.CallbackQuery):
+        await callback.message.answer('Оберіть здібність:', reply_markup=abilities_chamber)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='chamber_q')
+    async def ab_chamber_q(callback: types.CallbackQuery):
+        with open("abilities/chamber/chamber2.mp4", 'rb') as chamber:
+            await bot.send_video(chat_id=callback.from_user.id, video=chamber)
+        ab = Chamber().abilities()
+        await callback.message.answer(ab['q'], reply_markup=abilities_chamber)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='chamber_e')
+    async def ab_chamber_e(callback: types.CallbackQuery):
+        with open("abilities/chamber/chamber3.mp4", 'rb') as chamber:
+            await bot.send_video(chat_id=callback.from_user.id, video=chamber)
+        ab = Chamber().abilities()
+        await callback.message.answer(ab['e'], reply_markup=abilities_chamber)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='chamber_c')
+    async def ab_chamber_c(callback: types.CallbackQuery):
+        with open("abilities/chamber/chamber1.mp4", 'rb') as chamber:
+            await bot.send_video(chat_id=callback.from_user.id, video=chamber)
+        ab = Chamber().abilities()
+        await callback.message.answer(ab['c'], reply_markup=abilities_chamber)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='chamber_x')
+    async def ab_chamber_x(callback: types.CallbackQuery):
+        with open("abilities/chamber/chamber4.mp4", 'rb') as chamber:
+            await bot.send_video(chat_id=callback.from_user.id, video=chamber)
+        ab = Chamber().abilities()
+        await callback.message.answer(ab['x'], reply_markup=abilities_chamber)
+        await callback.answer()
+
+
+@dp.message_handler(lambda message: "ІНІЦІАТОР (INITIATOR)" in message.text)
+async def initiators(messsage: types.Message):
+    await bot.send_message(messsage.from_user.id, "ІНІЦІАТОР (INITIATOR)", reply_markup=initiatot)
+
+
+@dp.message_handler(text=['SOVA'])
+async def sova(message: types.Message):
+    photo = types.InputFile('agents_images/sova.png')
+    await bot.send_photo(chat_id=message.from_user.id, photo=photo)
+    photo.clean()
+    await message.answer('Оберіть категорію для ознайомлення:', reply_markup=info_sova)
+
+    @dp.callback_query_handler(text='bio_sova')
+    async def bio_sova(callback: types.CallbackQuery):
+        Sova_bio = Sova().bio()
+        await callback.message.answer(Sova_bio)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='abilities_sova')
+    async def ab_sova(callback: types.CallbackQuery):
+        await callback.message.answer('Оберіть здібність:', reply_markup=abilities_sova)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='sova_q')
+    async def ab_sova_q(callback: types.CallbackQuery):
+        with open("abilities/sova/sova3.mp4", 'rb') as sova:
+            await bot.send_video(chat_id=callback.from_user.id, video=sova)
+        ab = Sova().abilities()
+        await callback.message.answer(ab['q'], reply_markup=abilities_sova)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='sova_e')
+    async def ab_sova_e(callback: types.CallbackQuery):
+        with open("abilities/sova/sova1.mp4", 'rb') as sova:
+            await bot.send_video(chat_id=callback.from_user.id, video=sova)
+        ab = Sova().abilities()
+        await callback.message.answer(ab['e'], reply_markup=abilities_sova)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='sova_c')
+    async def ab_sova_c(callback: types.CallbackQuery):
+        with open("abilities/sova/sova2.mp4", 'rb') as sova:
+            await bot.send_video(chat_id=callback.from_user.id, video=sova)
+        ab = Sova().abilities()
+        await callback.message.answer(ab['c'], reply_markup=abilities_sova)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='sova_x')
+    async def ab_sova_x(callback: types.CallbackQuery):
+        with open("abilities/sova/sova4.mp4", 'rb') as sova:
+            await bot.send_video(chat_id=callback.from_user.id, video=sova)
+        ab = Sova().abilities()
+        await callback.message.answer(ab['x'], reply_markup=abilities_sova)
+        await callback.answer()
+
+
+@dp.message_handler(text=['BREACH'])
+async def breach(message: types.Message):
+    photo = types.InputFile('agents_images/breach.png')
+    await bot.send_photo(chat_id=message.from_user.id, photo=photo)
+    photo.clean()
+    await message.answer('Оберіть категорію для ознайомлення:', reply_markup=info_breach)
+
+    @dp.callback_query_handler(text='bio_breach')
+    async def bio_breach(callback: types.CallbackQuery):
+        Breach_bio = Breach().bio()
+        await callback.message.answer(Breach_bio, parse_mode='html')
+        await callback.answer()
+
+    @dp.callback_query_handler(text='abilities_breach')
+    async def ab_breach(callback: types.CallbackQuery):
+        await callback.message.answer('Оберіть здібність:', reply_markup=abilities_breach)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='breach_q')
+    async def ab_breach_q(callback: types.CallbackQuery):
+        with open("abilities/breach/breach2.mp4", 'rb') as breach:
+            await bot.send_video(chat_id=callback.from_user.id, video=breach)
+        ab = Breach().abilities()
+        await callback.message.answer(ab['q'], reply_markup=abilities_breach)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='breach_e')
+    async def ab_breach_e(callback: types.CallbackQuery):
+        with open("abilities/breach/breach3.mp4", 'rb') as breach:
+            await bot.send_video(chat_id=callback.from_user.id, video=breach)
+        ab = Breach().abilities()
+        await callback.message.answer(ab['e'], reply_markup=abilities_breach)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='breach_c')
+    async def ab_breach_c(callback: types.CallbackQuery):
+        with open("abilities/breach/breach1.mp4", 'rb') as breach:
+            await bot.send_video(chat_id=callback.from_user.id, video=breach)
+        ab = Breach().abilities()
+        await callback.message.answer(ab['c'], reply_markup=abilities_breach)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='breach_x')
+    async def ab_breach_x(callback: types.CallbackQuery):
+        with open("abilities/breach/breach4.mp4", 'rb') as breach:
+            await bot.send_video(chat_id=callback.from_user.id, video=breach)
+        ab = Breach().abilities()
+        await callback.message.answer(ab['x'], reply_markup=abilities_breach)
+        await callback.answer()
+
+
+@dp.message_handler(text=['SKYE'])
+async def skye(message: types.Message):
+    photo = types.InputFile('agents_images/skye.png')
+    await bot.send_photo(chat_id=message.from_user.id, photo=photo)
+    photo.clean()
+    await message.answer('Оберіть категорію для ознайомлення:', reply_markup=info_skye)
+
+    @dp.callback_query_handler(text='bio_skye')
+    async def bio_skye(callback: types.CallbackQuery):
+        Skye_bio = Skye().bio()
+        await callback.message.answer(Skye_bio, parse_mode='html')
+        await callback.answer()
+
+    @dp.callback_query_handler(text='abilities_skye')
+    async def ab_skye(callback: types.CallbackQuery):
+        await callback.message.answer('Оберіть здібність:', reply_markup=abilities_skye)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='skye_q')
+    async def ab_skye_q(callback: types.CallbackQuery):
+        with open("abilities/skye/skye2.mp4", 'rb') as skye:
+            await bot.send_video(chat_id=callback.from_user.id, video=skye)
+        ab = Skye().abilities()
+        await callback.message.answer(ab['q'], reply_markup=abilities_skye)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='skye_e')
+    async def ab_skye_e(callback: types.CallbackQuery):
+        with open("abilities/skye/skye1.mp4", 'rb') as skye:
+            await bot.send_video(chat_id=callback.from_user.id, video=skye)
+        ab = Skye().abilities()
+        await callback.message.answer(ab['e'], reply_markup=abilities_skye)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='skye_c')
+    async def ab_skye_c(callback: types.CallbackQuery):
+        with open("abilities/skye/skye3.mp4", 'rb') as skye:
+            await bot.send_video(chat_id=callback.from_user.id, video=skye)
+        ab = Skye().abilities()
+        await callback.message.answer(ab['c'], reply_markup=abilities_skye)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='skye_x')
+    async def ab_skye_x(callback: types.CallbackQuery):
+        with open("abilities/skye/skye4.mp4", 'rb') as skye:
+            await bot.send_video(chat_id=callback.from_user.id, video=skye)
+        ab = Skye().abilities()
+        await callback.message.answer(ab['x'], reply_markup=abilities_skye)
+        await callback.answer()
+
+
+@dp.message_handler(text=['KAY/O'])
+async def kayo(message: types.Message):
+    photo = types.InputFile('agents_images/kayo.png')
+    await bot.send_photo(chat_id=message.from_user.id, photo=photo)
+    photo.clean()
+    await message.answer('Оберіть категорію для ознайомлення:', reply_markup=info_kayo)
+
+    @dp.callback_query_handler(text='bio_kayo')
+    async def bio_kayo(callback: types.CallbackQuery):
+        Kayo_bio = Kayo().bio()
+        await callback.message.answer(Kayo_bio, parse_mode='html')
+        await callback.answer()
+
+    @dp.callback_query_handler(text='abilities_kayo')
+    async def ab_kayo(callback: types.CallbackQuery):
+        await callback.message.answer('Оберіть здібність:', reply_markup=abilities_kayo)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='kayo_q')
+    async def ab_kayo_q(callback: types.CallbackQuery):
+        with open("abilities/kayo/kayo2.mp4", 'rb') as kayo:
+            await bot.send_video(chat_id=callback.from_user.id, video=kayo)
+        ab = Kayo().abilities()
+        await callback.message.answer(ab['q'], reply_markup=abilities_kayo)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='kayo_e')
+    async def ab_kayo_e(callback: types.CallbackQuery):
+        with open("abilities/kayo/kayo1.mp4", 'rb') as kayo:
+            await bot.send_video(chat_id=callback.from_user.id, video=kayo)
+        ab = Kayo().abilities()
+        await callback.message.answer(ab['e'], reply_markup=abilities_kayo)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='kayo_c')
+    async def ab_kayo_c(callback: types.CallbackQuery):
+        with open("abilities/kayo/kayo3.mp4", 'rb') as kayo:
+            await bot.send_video(chat_id=callback.from_user.id, video=kayo)
+        ab = Kayo().abilities()
+        await callback.message.answer(ab['c'], reply_markup=abilities_kayo)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='kayo_x')
+    async def ab_kayo_x(callback: types.CallbackQuery):
+        with open("abilities/kayo/kayo4.mp4", 'rb') as kayo:
+            await bot.send_video(chat_id=callback.from_user.id, video=kayo)
+        ab = Kayo().abilities()
+        await callback.message.answer(ab['x'], reply_markup=abilities_kayo)
+        await callback.answer()
+
+
+@dp.message_handler(text=['FADE'])
+async def fade(message: types.Message):
+    photo = types.InputFile('agents_images/fade.png')
+    await bot.send_photo(chat_id=message.from_user.id, photo=photo)
+    photo.clean()
+    await message.answer('Оберіть категорію для ознайомлення:', reply_markup=info_fade)
+
+    @dp.callback_query_handler(text='bio_fade')
+    async def bio_fade(callback: types.CallbackQuery):
+        Fade_bio = Fade().bio()
+        await callback.message.answer(Fade_bio, parse_mode='html')
+        await callback.answer()
+
+    @dp.callback_query_handler(text='abilities_fade')
+    async def ab_fade(callback: types.CallbackQuery):
+        await callback.message.answer('Оберіть здібність:', reply_markup=abilities_fade)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='fade_q')
+    async def ab_fade_q(callback: types.CallbackQuery):
+        with open("abilities/fade/fade3.mp4", 'rb') as fade:
+            await bot.send_video(chat_id=callback.from_user.id, video=fade)
+        ab = Fade().abilities()
+        await callback.message.answer(ab['q'], reply_markup=abilities_fade)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='fade_e')
+    async def ab_fade_e(callback: types.CallbackQuery):
+        with open("abilities/fade/fade1.mp4", 'rb') as fade:
+            await bot.send_video(chat_id=callback.from_user.id, video=fade)
+        ab = Fade().abilities()
+        await callback.message.answer(ab['e'], reply_markup=abilities_fade)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='fade_c')
+    async def ab_fade_c(callback: types.CallbackQuery):
+        with open("abilities/fade/fade2.mp4", 'rb') as fade:
+            await bot.send_video(chat_id=callback.from_user.id, video=fade)
+        ab = Fade().abilities()
+        await callback.message.answer(ab['c'], reply_markup=abilities_fade)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='fade_x')
+    async def ab_fade_x(callback: types.CallbackQuery):
+        with open("abilities/fade/fade4.mp4", 'rb') as fade:
+            await bot.send_video(chat_id=callback.from_user.id, video=fade)
+        ab = Fade().abilities()
+        await callback.message.answer(ab['x'], reply_markup=abilities_fade)
+        await callback.answer()
+
+
+@dp.message_handler(text=['GEKKO'])
+async def gekko(message: types.Message):
+    photo = types.InputFile('agents_images/gekko.png')
+    await bot.send_photo(chat_id=message.from_user.id, photo=photo)
+    photo.clean()
+    await message.answer('Оберіть категорію для ознайомлення:', reply_markup=info_gekko)
+
+    @dp.callback_query_handler(text='bio_gekko')
+    async def bio_gekko(callback: types.CallbackQuery):
+        Gekko_bio = Gekko().bio()
+        await callback.message.answer(Gekko_bio, parse_mode='html')
+        await callback.answer()
+
+    @dp.callback_query_handler(text='abilities_gekko')
+    async def ab_gekko(callback: types.CallbackQuery):
+        await callback.message.answer('Оберіть здібність:', reply_markup=abilities_gekko)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='gekko_q')
+    async def ab_gekko_q(callback: types.CallbackQuery):
+        try:
+            with open("abilities/gekko/gekko2.mp4", 'rb') as gekko:
+                await bot.send_video(chat_id=callback.from_user.id, video=gekko)
+            ab = Gekko().abilities()
+            await callback.message.answer(ab['q'], reply_markup=abilities_gekko)
+            await callback.answer()
+        except InvalidQueryID as e:
+            await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
+            print(f"Error: {e}")
+
+
+    @dp.callback_query_handler(text='gekko_e')
+    async def ab_gekko_e(callback: types.CallbackQuery):
+        with open("abilities/gekko/gekko1.mp4", 'rb') as gekko:
+            await bot.send_video(chat_id=callback.from_user.id, video=gekko)
+        ab = Gekko().abilities()
+        await callback.message.answer(ab['e'], reply_markup=abilities_gekko)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='gekko_c')
+    async def ab_gekko_c(callback: types.CallbackQuery):
+        with open("abilities/gekko/gekko3.mp4", 'rb') as gekko:
+            await bot.send_video(chat_id=callback.from_user.id, video=gekko)
+        ab = Gekko().abilities()
+        await callback.message.answer(ab['c'], reply_markup=abilities_gekko)
+        await callback.answer()
+
+    @dp.callback_query_handler(text='gekko_x')
+    async def ab_gekko_x(callback: types.CallbackQuery):
+        with open("abilities/gekko/gekko4.mp4", 'rb') as gekko:
+            await bot.send_video(chat_id=callback.from_user.id, video=gekko)
+        ab = Gekko().abilities()
+        await callback.message.answer(ab['x'], reply_markup=abilities_gekko)
+        await callback.answer()
+
+
 
 
 

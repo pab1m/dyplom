@@ -197,3 +197,145 @@ btn_chamber = KeyboardButton(text="CHAMBER")
 sentinel = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
 sentinel.add(btn_sage, btn_cypher, btn_kj, btn_chamber).add(btn_agents)
 
+
+info_sage = InlineKeyboardMarkup(row_width=2)
+btn_info_sage = InlineKeyboardButton(text="Біографія SAGE", callback_data='bio_sage')
+btn_abilities_sage = InlineKeyboardButton(text="Здібності SAGE", callback_data='abilities_sage')
+info_sage.add(btn_info_sage, btn_abilities_sage)
+
+abilities_sage = InlineKeyboardMarkup(row_width=2)
+btn_sage_q = InlineKeyboardButton(text="Сфера уповільнення (Q)", callback_data='sage_q')
+btn_sage_e = InlineKeyboardButton(text="Сфера лікування (E)", callback_data='sage_e')
+btn_sage_c = InlineKeyboardButton(text="Сфера бар'єра (C)", callback_data='sage_c')
+btn_sage_x = InlineKeyboardButton(text="Воскресіння (X)", callback_data='sage_x')
+abilities_sage.add(btn_sage_q, btn_sage_e, btn_sage_c, btn_sage_x)
+
+
+info_cypher = InlineKeyboardMarkup(row_width=2)
+btn_info_cypher = InlineKeyboardButton(text="Біографія CYPHER", callback_data='bio_cypher')
+btn_abilities_cypher = InlineKeyboardButton(text="Здібності CYPHER", callback_data='abilities_cypher')
+info_cypher.add(btn_info_cypher, btn_abilities_cypher)
+
+abilities_cypher = InlineKeyboardMarkup(row_width=2)
+btn_cypher_q = InlineKeyboardButton(text="Кіберклітка (Q)", callback_data='cypher_q')
+btn_cypher_e = InlineKeyboardButton(text="Камера (E)", callback_data='cypher_e')
+btn_cypher_c = InlineKeyboardButton(text="Розтяжка (C)", callback_data='cypher_c')
+btn_cypher_x = InlineKeyboardButton(text="Нейрокражі (X)", callback_data='cypher_x')
+abilities_cypher.add(btn_cypher_q, btn_cypher_e, btn_cypher_c, btn_cypher_x)
+
+
+info_kj = InlineKeyboardMarkup(row_width=2)
+btn_info_kj = InlineKeyboardButton(text="Біографія KILLJOY", callback_data='bio_kj')
+btn_abilities_kj = InlineKeyboardButton(text="Здібності KILLJOY", callback_data='abilities_kj')
+info_kj.add(btn_info_kj, btn_abilities_kj)
+
+abilities_kj = InlineKeyboardMarkup(row_width=2)
+btn_kj_q = InlineKeyboardButton(text="Тривогобот (Q)", callback_data='kj_q')
+btn_kj_e = InlineKeyboardButton(text="Турель (E)", callback_data='kj_e')
+btn_kj_c = InlineKeyboardButton(text="Вулик (C)", callback_data='kj_c')
+btn_kj_x = InlineKeyboardButton(text="Блокування (X)", callback_data='kj_x')
+abilities_kj.add(btn_kj_q, btn_kj_e, btn_kj_c, btn_kj_x)
+
+
+info_chamber = InlineKeyboardMarkup(row_width=2)
+btn_info_chamber = InlineKeyboardButton(text="Біографія CHAMBER", callback_data='bio_chamber')
+btn_abilities_chamber = InlineKeyboardButton(text="Здібності CHAMBER", callback_data='abilities_chamber')
+info_chamber.add(btn_info_chamber, btn_abilities_chamber)
+
+abilities_chamber = InlineKeyboardMarkup(row_width=2)
+btn_chamber_q = InlineKeyboardButton(text="Мисливець за головами (Q)", callback_data='chamber_q')
+btn_chamber_e = InlineKeyboardButton(text="Рандеву (E)", callback_data='chamber_e')
+btn_chamber_c = InlineKeyboardButton(text="Коронний пройом (C)", callback_data='chamber_c')
+btn_chamber_x = InlineKeyboardButton(text="Демонстрація сили (X)", callback_data='chamber_x')
+abilities_chamber.add(btn_chamber_q, btn_chamber_e, btn_chamber_c, btn_chamber_x)
+
+
+btn_sova = KeyboardButton(text="SOVA")
+btn_breach = KeyboardButton(text="BREACH")
+btn_skye = KeyboardButton(text="SKYE")
+btn_kayo = KeyboardButton(text="KAY/O")
+btn_fade = KeyboardButton(text="FADE")
+btn_gekko = KeyboardButton(text="GEKKO")
+initiatot = ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
+initiatot.add(btn_sova, btn_breach, btn_skye, btn_kayo, btn_fade, btn_gekko).add(btn_agents)
+
+
+info_sova = InlineKeyboardMarkup(row_width=2)
+btn_info_sova = InlineKeyboardButton(text="Біографія SOVA", callback_data='bio_sova')
+btn_abilities_sova = InlineKeyboardButton(text="Здібності SOVA", callback_data='abilities_sova')
+info_sova.add(btn_info_sova, btn_abilities_sova)
+
+abilities_sova = InlineKeyboardMarkup(row_width=2)
+btn_sova_q = InlineKeyboardButton(text="Шокова стріла (Q)", callback_data='sova_q')
+btn_sova_e = InlineKeyboardButton(text="Розвід стріла (E)", callback_data='sova_e')
+btn_sova_c = InlineKeyboardButton(text="Дрон-сова (C)", callback_data='sova_c')
+btn_sova_x = InlineKeyboardButton(text="Гнів мисливця (X)", callback_data='sova_x')
+abilities_sova.add(btn_sova_q, btn_sova_e, btn_sova_c, btn_sova_x)
+
+
+info_breach = InlineKeyboardMarkup(row_width=2)
+btn_info_breach = InlineKeyboardButton(text="Біографія BREACH", callback_data='bio_breach')
+btn_abilities_breach = InlineKeyboardButton(text="Здібності BREACH", callback_data='abilities_breach')
+info_breach.add(btn_info_breach, btn_abilities_breach)
+
+abilities_breach = InlineKeyboardMarkup(row_width=2)
+btn_breach_q = InlineKeyboardButton(text="Сліпучий заряд (Q)", callback_data='breach_q')
+btn_breach_e = InlineKeyboardButton(text="Тріщина (E)", callback_data='breach_e')
+btn_breach_c = InlineKeyboardButton(text="Пробивний удар (C)", callback_data='breach_c')
+btn_breach_x = InlineKeyboardButton(text="Розкочування грому (X)", callback_data='breach_x')
+abilities_breach.add(btn_breach_q, btn_breach_e, btn_breach_c, btn_breach_x)
+
+
+info_skye = InlineKeyboardMarkup(row_width=2)
+btn_info_skye = InlineKeyboardButton(text="Біографія SKYE", callback_data='bio_skye')
+btn_abilities_skye = InlineKeyboardButton(text="Здібності SKYE", callback_data='abilities_skye')
+info_skye.add(btn_info_skye, btn_abilities_skye)
+
+abilities_skye = InlineKeyboardMarkup(row_width=2)
+btn_skye_q = InlineKeyboardButton(text="Слідопит (Q)", callback_data='skye_q')
+btn_skye_e = InlineKeyboardButton(text="Путівне світло (E)", callback_data='skye_e')
+btn_skye_c = InlineKeyboardButton(text="Зростання (C)", callback_data='skye_c')
+btn_skye_x = InlineKeyboardButton(text="Шукачі (X)", callback_data='skye_x')
+abilities_skye.add(btn_skye_q, btn_skye_e, btn_skye_c, btn_skye_x)
+
+
+info_kayo = InlineKeyboardMarkup(row_width=2)
+btn_info_kayo = InlineKeyboardButton(text="Біографія KAY/O", callback_data='bio_kayo')
+btn_abilities_kayo = InlineKeyboardButton(text="Здібності KAY/O", callback_data='abilities_kayo')
+info_kayo.add(btn_info_kayo, btn_abilities_kayo)
+
+abilities_kayo = InlineKeyboardMarkup(row_width=2)
+btn_kayo_q = InlineKeyboardButton(text="Світло/ва граната (Q)", callback_data='kayo_q')
+btn_kayo_e = InlineKeyboardButton(text="Епі/центр (E)", callback_data='kayo_e')
+btn_kayo_c = InlineKeyboardButton(text="Фраг/мент (C)", callback_data='kayo_c')
+btn_kayo_x = InlineKeyboardButton(text="NULL/cmd (X)", callback_data='kayo_x')
+abilities_kayo.add(btn_kayo_q, btn_kayo_e, btn_kayo_c, btn_kayo_x)
+
+
+info_fade = InlineKeyboardMarkup(row_width=2)
+btn_info_fade = InlineKeyboardButton(text="Біографія FADE", callback_data='bio_fade')
+btn_abilities_fade = InlineKeyboardButton(text="Здібності FADE", callback_data='abilities_fade')
+info_fade.add(btn_info_fade, btn_abilities_fade)
+
+abilities_fade = InlineKeyboardMarkup(row_width=2)
+btn_fade_q = InlineKeyboardButton(text="Захоплення (Q)", callback_data='fade_q')
+btn_fade_e = InlineKeyboardButton(text="Привид (E)", callback_data='fade_e')
+btn_fade_c = InlineKeyboardButton(text="Хижак (C)", callback_data='fade_c')
+btn_fade_x = InlineKeyboardButton(text="Темрява (X)", callback_data='fade_x')
+abilities_fade.add(btn_fade_q, btn_fade_e, btn_fade_c, btn_fade_x)
+
+
+info_gekko = InlineKeyboardMarkup(row_width=2)
+btn_info_gekko = InlineKeyboardButton(text="Біографія GEKKO", callback_data='bio_gekko')
+btn_abilities_gekko = InlineKeyboardButton(text="Здібності GEKKO", callback_data='abilities_gekko')
+info_gekko.add(btn_info_gekko, btn_abilities_gekko)
+
+abilities_gekko = InlineKeyboardMarkup(row_width=2)
+btn_gekko_q = InlineKeyboardButton(text="Wingman (Q)", callback_data='gekko_q')
+btn_gekko_e = InlineKeyboardButton(text="Dizzy (E)", callback_data='gekko_e')
+btn_gekko_c = InlineKeyboardButton(text="Mosh pit (C)", callback_data='gekko_c')
+btn_gekko_x = InlineKeyboardButton(text="Thrash (X)", callback_data='gekko_x')
+abilities_gekko.add(btn_gekko_q, btn_gekko_e, btn_gekko_c, btn_gekko_x)
+
+
+
