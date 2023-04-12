@@ -2,10 +2,11 @@ import os
 from aiogram.dispatcher.filters import Text
 import requests
 from aiogram import Bot, types
-from aiogram.dispatcher import Dispatcher
+from aiogram.dispatcher import Dispatcher, FSMContext
 from aiogram.utils import executor
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InputMediaPhoto
 from aiogram.utils.exceptions import InvalidQueryID
+from aiogram.dispatcher.filters.state import State, StatesGroup
 
 from btn import *
 from all_inf import *
@@ -36,6 +37,24 @@ async def help_message(message: types.Message):
 async def new_people(messsage: types.Message):
     await messsage.answer("Для новачків:", reply_markup=new_player)
 
+@dp.message_handler(lambda message: "На головну" in message.text)
+async def main(messsage: types.Message):
+    await messsage.answer("Для новачків:", reply_markup=kb_help)
+
+
+class Form(StatesGroup):
+    name = State()
+
+@dp.message_handler(lambda message: "Моя статистика" in message.text)
+async def my_stats(messsage: types.Message):
+    await messsage.answer("Введіть повний нік:")
+    await Form.name.set()
+
+@dp.message_handler(state=Form.name)
+async def stats(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        data['name'] = message.text
+    await state.finish()
 
 @dp.message_handler(lambda message: 'Агенти' in message.text)
 async def new_people(message: types.Message):

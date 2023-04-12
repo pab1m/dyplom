@@ -8,7 +8,5 @@ for i in name:
     else:
         new.append(i)
 
-print(str(new))
-
 s = separator.join(new)
 print(s)
