@@ -1,21 +1,20 @@
 import os
 
-import match as match
 import requests
 import valorant
 
-api_key = "RGAPI-6622d638-c0ef-4fc3-b913-36b2e588f7cb"
+api_key = "RGAPI-e8ae929f-0c27-49f6-905e-89cd76cfd5ac"
 
 
-client = valorant.Client(api_key, locale=None)
+client = valorant.Client(api_key,  locale="en-US")
 # client = valorant.Client(api_key, locale=None)
 
-account = client.get_user_by_name("Pab1m#1606")
-
-matches = account.matchlist().history.find(queueId="competitive")
-matches = matches.get()
-
-print(matches.teams)
+# account = client.get_user_by_name("Pab1m#1606")
+#
+# matches = account.matchlist().history.find(queueId="competitive")
+# matches = matches.get()
+#
+# print(matches.teams)
 
 
 
@@ -32,13 +31,13 @@ print(matches.teams)
 
 
 
-# skins = client.get_skins()
-#
-# name = []
-#
-# pages = client.get_leaderboard(size=50)
-#
-# print(pages.players[1].gameName)
+skins = client.get_skins()
+
+
+
+pages = client.get_leaderboard(size=50)
+
+print(pages.players[0].gameName)
 
 
 
@@ -50,10 +49,26 @@ print(matches.teams)
 
 
 
-# account = client.get_user_by_name(name='Pab1m#1606', route='europe')
+account = client.get_user_by_name(name='Pab1m#1606')
 
-# match = account.matchlist().history.find(queueId="competitive")
-# matchs = account.matchlist()
+match = account.matchlist().history.find(queueId="competitive")
+print(match)
+
+# if match == None:
+#     print("No Ranked match in recent history!")
+#     exit(1)
+# else:
+#     match = match.get()
+
+
+# for team in match.teams:
+#     print(f"{team.teamId} Team's Ranks: ")
+#
+#     # Find all the players on the same team.
+#     players = match.players.get_all(teamId=team.teamId)
+#
+#     for player in players:
+#         print(f"\t{player.gameName} - {player.rank}")
 
 
 
@@ -61,7 +76,6 @@ print(matches.teams)
 # res = lb.players.get_all(numberOfWins=89)
 # for name in res:
 #     print(f"{name.gameName}, {name.rankedRating}")
-
 
 
 # name = input("Search a Valorant Skin Collection: ")
