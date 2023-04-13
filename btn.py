@@ -14,6 +14,11 @@ btn_lobby = KeyboardButton(text="На головну")
 new_player = ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
 new_player.add(btn_agents, btn_maps, btn_gun, btn_lobby)
 
+btn_stats_now = KeyboardButton(text="Статистика за цей акт")
+btn_stats_all = KeyboardButton(text="Статистика за всі акти")
+btn_last_5_matches = KeyboardButton(text="Останні 5 матчів")
+stats = ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
+stats.add(btn_stats_now, btn_stats_all, btn_last_5_matches, btn_lobby)
 
 btn_controller = KeyboardButton(text="СПЕЦІАЛІСТ (CONTROLLER)")
 btn_duelist = KeyboardButton(text="ДУЕЛЯНТ (DUELIST)")

@@ -6,10 +6,28 @@ import time
 from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
+import json
 # from webdriver_manager.chrome import ChromeDriverManager
+from aiogram import Bot, types
 
 
-def set_config():
+
+# def set_config():
+#     d = DesiredCapabilities.CHROME
+#     d['loggingPrefs'] = {'browser': 'ALL'}
+#     # service = ChromeService(ChromeDriverManager(version="108.0.5359.98").install())
+#     chrome_options = webdriver.ChromeOptions()
+#     prefs = {"profile.default_content_setting_values.notifications": 2}
+#     chrome_options.add_experimental_option("prefs", prefs)
+#     chrome_options.add_experimental_option("detach", True)
+#     chrome_options.add_argument("--incognito")
+#     # chrome_options.add_argument("--headless")
+#     chrome_options.add_argument("--no-sandbox")
+#     # driver = webdriver.Chrome(service=service, options=chrome_options, desired_capabilities=d)
+#     driver = webdriver.Chrome(options=chrome_options, desired_capabilities=d)
+#     return driver
+
+def stats_now(name):
     d = DesiredCapabilities.CHROME
     d['loggingPrefs'] = {'browser': 'ALL'}
     # service = ChromeService(ChromeDriverManager(version="108.0.5359.98").install())
@@ -22,60 +40,44 @@ def set_config():
     chrome_options.add_argument("--no-sandbox")
     # driver = webdriver.Chrome(service=service, options=chrome_options, desired_capabilities=d)
     driver = webdriver.Chrome(options=chrome_options, desired_capabilities=d)
-    return driver
 
-driver = set_config()
+    # driver = set_config()
 
-headers = {
-    "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"}
+    headers = {
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"}
 
-name = str(input("Enter name: "))
-time.sleep(3)
+    url = "https://tracker.gg/valorant"
+    driver.get(url=url)
+    time.sleep(5)
+    accept = driver.find_element(By.ID, 'onetrust-accept-btn-handler').click()
+    time.sleep(2)
 
+    find_account = driver.find_element(By.CLASS_NAME, 'search-box__bar').click()
+    time.sleep(3)
 
-url = "https://tracker.gg/valorant"
+    input_name = driver.find_element(By.CSS_SELECTOR, 'input[data-v-885f6ad5]')
+    input_name.send_keys(name)
+    time.sleep(5)
 
-driver.get(url=url)
-time.sleep(5)
+    # з цим це не працює
+    # chrome_options.add_argument("--headless")
+    account = driver.find_element(By.CLASS_NAME, 'result-set__results').click()
+    time.sleep(3)
 
-accept = driver.find_element(By.ID, 'onetrust-accept-btn-handler').click()
-time.sleep(2)
+    new = []
+    separator = ""
+    for i in name:
+        if i == " ":
+            new.append(i.replace(' ', '%20'))
+        else:
+            new.append(i)
+    s = separator.join(new)
 
-find_account = driver.find_element(By.CLASS_NAME, 'search-box__bar').click()
-time.sleep(3)
+    url2 = "https://tracker.gg/valorant/profile/riot/" + f"{s.replace('#', '%23')}/" + "overview"
+    print(url2)
 
-input_name = driver.find_element(By.CSS_SELECTOR, 'input[data-v-885f6ad5]')
-input_name.send_keys(name)
-time.sleep(5)
-
-#з цим це не працює
-
-# chrome_options.add_argument("--headless")
-account = driver.find_element(By.CLASS_NAME, 'result-set__results').click()
-time.sleep(3)
-
-new = []
-separator = ""
-
-for i in name:
-    if i == " ":
-        new.append(i.replace(' ', '%20'))
-    else:
-        new.append(i)
-
-s = separator.join(new)
-
-
-url2 = "https://tracker.gg/valorant/profile/riot/" + f"{s.replace('#', '%23')}/" + "overview"
-print(url2)
-
-
-
-response = requests.get(url2, headers=headers)
-soup = BeautifulSoup(response.content, 'lxml')
-
-
-def stats_now():
+    response = requests.get(url2, headers=headers)
+    soup = BeautifulSoup(response.content, 'lxml')
     news_titles = []
     name = []
     for title in soup.find_all("div", class_="stat align-left giant expandable"):
@@ -86,9 +88,9 @@ def stats_now():
         name.append(qwert.text)
 
     stats_dict = dict(zip(name, news_titles))
+    driver.quit()
 
-    print(f"{name[0]}: {stats_dict[name[0]]} \n{name[1]}: {stats_dict[name[1]]} \n{name[2]}: {stats_dict[name[2]]} \n{name[3]}: {stats_dict[name[3]]}")
+    with open('my_dict.json', 'w') as f:
+        json.dump(stats_dict, f)
 
-stats_now()
-
-driver.quit()
+    # print(f"{name[0]}: {stats_dict[name[0]]} \n{name[1]}: {stats_dict[name[1]]} \n{name[2]}: {stats_dict[name[2]]} \n{name[3]}: {stats_dict[name[3]]}")

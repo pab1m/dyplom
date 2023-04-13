@@ -1,3 +1,6 @@
+import loger as loger
+
+
 class EditAmountOfPost(StatesGroup):
     edit_user_id = State()
     available_amount = State()
