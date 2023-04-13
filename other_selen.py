@@ -12,22 +12,7 @@ from aiogram import Bot, types
 
 
 
-# def set_config():
-#     d = DesiredCapabilities.CHROME
-#     d['loggingPrefs'] = {'browser': 'ALL'}
-#     # service = ChromeService(ChromeDriverManager(version="108.0.5359.98").install())
-#     chrome_options = webdriver.ChromeOptions()
-#     prefs = {"profile.default_content_setting_values.notifications": 2}
-#     chrome_options.add_experimental_option("prefs", prefs)
-#     chrome_options.add_experimental_option("detach", True)
-#     chrome_options.add_argument("--incognito")
-#     # chrome_options.add_argument("--headless")
-#     chrome_options.add_argument("--no-sandbox")
-#     # driver = webdriver.Chrome(service=service, options=chrome_options, desired_capabilities=d)
-#     driver = webdriver.Chrome(options=chrome_options, desired_capabilities=d)
-#     return driver
-
-def stats_now(name):
+def set_config():
     d = DesiredCapabilities.CHROME
     d['loggingPrefs'] = {'browser': 'ALL'}
     # service = ChromeService(ChromeDriverManager(version="108.0.5359.98").install())
@@ -40,8 +25,23 @@ def stats_now(name):
     chrome_options.add_argument("--no-sandbox")
     # driver = webdriver.Chrome(service=service, options=chrome_options, desired_capabilities=d)
     driver = webdriver.Chrome(options=chrome_options, desired_capabilities=d)
+    return driver
 
-    # driver = set_config()
+def stats_now(name):
+    # d = DesiredCapabilities.CHROME
+    # d['loggingPrefs'] = {'browser': 'ALL'}
+    # # service = ChromeService(ChromeDriverManager(version="108.0.5359.98").install())
+    # chrome_options = webdriver.ChromeOptions()
+    # prefs = {"profile.default_content_setting_values.notifications": 2}
+    # chrome_options.add_experimental_option("prefs", prefs)
+    # chrome_options.add_experimental_option("detach", True)
+    # chrome_options.add_argument("--incognito")
+    # # chrome_options.add_argument("--headless")
+    # chrome_options.add_argument("--no-sandbox")
+    # # driver = webdriver.Chrome(service=service, options=chrome_options, desired_capabilities=d)
+    # driver = webdriver.Chrome(options=chrome_options, desired_capabilities=d)
+
+    driver = set_config()
 
     headers = {
         "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"}

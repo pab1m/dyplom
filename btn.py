@@ -343,4 +343,14 @@ btn_gekko_x = InlineKeyboardButton(text="Thrash (X)", callback_data='gekko_x')
 abilities_gekko.add(btn_gekko_q, btn_gekko_e, btn_gekko_c, btn_gekko_x)
 
 
-
+btn_lotus = KeyboardButton(text="LOTUS")
+btn_pearl = KeyboardButton(text="PEARL")
+btn_fracture = KeyboardButton(text="FRACTURE")
+btn_breeze = KeyboardButton(text="BREEZE")
+btn_icebox = KeyboardButton(text="ICEBOX")
+btn_bind = KeyboardButton(text="BIND")
+btn_haven = KeyboardButton(text="HAVEN")
+btn_split = KeyboardButton(text="SPLIT")
+btn_ascent = KeyboardButton(text="ASCENT")
+maps = ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
+maps.add(btn_lotus, btn_pearl, btn_fracture, btn_breeze, btn_icebox, btn_bind, btn_haven, btn_split, btn_ascent).add(btn_for_new)

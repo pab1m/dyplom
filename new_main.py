@@ -1,14 +1,15 @@
 import os
-from aiogram.dispatcher.filters import Text
 import requests
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher, FSMContext
 from aiogram.utils import executor
 from aiogram.utils.exceptions import InvalidQueryID
+from aiogram.types import InputMediaPhoto
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from btn import *
 from all_inf import *
+from maps import *
 from other_selen import *
 import json
 
@@ -70,13 +71,12 @@ async def my_staats(message: types.Message, state: FSMContext):
 @dp.message_handler(lambda message: "Статистика за цей акт" in message.text)
 async def now_stats(messsage: types.Message):
     print(username[0])
-    qwerty = stats_now(username[0])
+    stats_now(username[0])
     with open('my_dict.json', 'r') as f:
         my_dict = json.load(f)
     print(my_dict['Damage/Round'])
     await messsage.answer(my_dict['Damage/Round'])
     os.remove('my_dict.json')
-
 
 
 @dp.message_handler(lambda message: 'Агенти' in message.text)
@@ -1193,7 +1193,64 @@ async def gekko(message: types.Message):
         await callback.answer()
 
 
+# @dp.message_handler(lambda message: "Карти" in message.text)
+@dp.message_handler(text=['Карти'])
+async def list_maps(messsage: types.Message):
+    await messsage.answer("Оберіть карту:", reply_markup=maps)
 
+
+@dp.message_handler(text=['LOTUS'])
+async def lotus(messsage: types.Message):
+    photo = Lotus().photos()
+    await bot.send_media_group(chat_id=messsage.from_user.id, media=photo[:])
+
+
+@dp.message_handler(text=['PEARL'])
+async def pearl(messsage: types.Message):
+    photo = Pearl().photos()
+    await bot.send_media_group(chat_id=messsage.from_user.id, media=photo[:])
+
+
+@dp.message_handler(text=['FRACTURE'])
+async def fracture(messsage: types.Message):
+    photo = Fracture().photos()
+    await bot.send_media_group(chat_id=messsage.from_user.id, media=photo[:])
+
+
+@dp.message_handler(text=['BREEZE'])
+async def breeze(messsage: types.Message):
+    photo = Breeze().photos()
+    await bot.send_media_group(chat_id=messsage.from_user.id, media=photo[:])
+
+
+@dp.message_handler(text=['ICEBOX'])
+async def icebox(messsage: types.Message):
+    photo = Icebox().photos()
+    await bot.send_media_group(chat_id=messsage.from_user.id, media=photo[:])
+
+
+@dp.message_handler(text=['BIND'])
+async def bind(messsage: types.Message):
+    photo = Bind().photos()
+    await bot.send_media_group(chat_id=messsage.from_user.id, media=photo[:])
+
+
+@dp.message_handler(text=['HAVEN'])
+async def haven(messsage: types.Message):
+    photo = Haven().photos()
+    await bot.send_media_group(chat_id=messsage.from_user.id, media=photo[:])
+
+
+@dp.message_handler(text=['SPLIT'])
+async def split(messsage: types.Message):
+    photo = Split().photos()
+    await bot.send_media_group(chat_id=messsage.from_user.id, media=photo[:])
+
+
+@dp.message_handler(text=['ASCENT'])
+async def ascent(messsage: types.Message):
+    photo = Ascent().photos()
+    await bot.send_media_group(chat_id=messsage.from_user.id, media=photo[:])
 
 
 executor.start_polling(dp, skip_updates=True)
