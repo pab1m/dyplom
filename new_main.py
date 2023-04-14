@@ -12,13 +12,14 @@ from all_inf import *
 from maps import *
 from other_selen import *
 import json
+import sqlite3
 
 TOKEN = "6275163921:AAFvgDqIWHw7Lk0YnaZPBVW2rHJEjrKu_FA"
 username = []
 
+
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
-
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
@@ -54,29 +55,53 @@ async def my_stats(messsage: types.Message):
     await messsage.answer("Введіть повний нікнейм (Name#1234):")
     await Stats.name.set()
 
+    # id_user = messsage.from_user.id
+    # name_user = messsage.text
+    # # time.sleep(10)
+    # conn = sqlite3.connect('user.db')
+    # cursor = conn.cursor()
+    # cursor.execute(f"INSERT INTO users (id, name) VALUES (741, '{name_user}')")
+    # conn.commit()
+    # conn.close()
+#
 @dp.message_handler(state=Stats.name)
 async def my_staats(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['name'] = message.text
-        username.append(data['name'])
-        data['name'] = ''
-    # await state.set_data({'name': message.text})
-    # data['name'] = ''
-    await state.finish()
-    # username.append(data['name'])
+    id_user = message.from_user.id
 
+    conn = sqlite3.connect('user.db')
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT id FROM users WHERE id = {id_user}")
+    result = cursor.fetchone()
+
+    if result:
+        print("Вас знайдено в БД")
+    else:
+        cursor.execute(f"INSERT INTO users (id, name) VALUES ({id_user}, '{data['name']}')")
+        print("Вас додано")
+
+    conn.commit()
+    conn.close()
+
+    await state.finish()
     await message.answer("Оберіть яку саме потрібно статистику:", reply_markup=stats)
 
 
 @dp.message_handler(lambda message: "Статистика за цей акт" in message.text)
 async def now_stats(messsage: types.Message):
-    print(username[0])
-    stats_now(username[0])
-    with open('my_dict.json', 'r') as f:
-        my_dict = json.load(f)
-    print(my_dict['Damage/Round'])
-    await messsage.answer(my_dict['Damage/Round'])
-    os.remove('my_dict.json')
+    conn = sqlite3.connect('user.db')
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT name FROM users WHERE id = {messsage.from_user.id}")
+    res = cursor.fetchone()
+    print(res[0])
+
+    # stats_now(username[0])
+#     with open('my_dict.json', 'r') as f:
+#         my_dict = json.load(f)
+#     print(my_dict['Damage/Round'])
+#     await messsage.answer(my_dict['Damage/Round'])
+#     os.remove('my_dict.json')
 
 
 @dp.message_handler(lambda message: 'Агенти' in message.text)
