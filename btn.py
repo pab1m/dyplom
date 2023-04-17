@@ -2,7 +2,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMar
 
 btn_for_new = KeyboardButton(text="Для новачків")
 btn_stats = KeyboardButton(text="Моя статистика")
-btn_help = KeyboardButton(text="Допомога")
+btn_help = KeyboardButton(text="Відгук")
 kb_help = ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
 kb_help.row(btn_for_new, btn_stats, btn_help)
 
@@ -16,9 +16,10 @@ new_player.add(btn_agents, btn_maps, btn_gun, btn_lobby)
 
 btn_stats_now = KeyboardButton(text="Статистика за цей акт")
 btn_stats_all = KeyboardButton(text="Статистика за всі акти")
-btn_last_5_matches = KeyboardButton(text="Останні 5 матчів")
-stats = ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
-stats.add(btn_stats_now, btn_stats_all, btn_last_5_matches, btn_lobby)
+btn_last_5_matches = KeyboardButton(text="Інформація останнього матчу")
+btn_update_nic = KeyboardButton(text="Змінити нікнейм")
+stats = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+stats.add(btn_stats_now, btn_stats_all, btn_last_5_matches, btn_update_nic).add(btn_lobby)
 
 btn_controller = KeyboardButton(text="СПЕЦІАЛІСТ (CONTROLLER)")
 btn_duelist = KeyboardButton(text="ДУЕЛЯНТ (DUELIST)")
@@ -354,3 +355,60 @@ btn_split = KeyboardButton(text="SPLIT")
 btn_ascent = KeyboardButton(text="ASCENT")
 maps = ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
 maps.add(btn_lotus, btn_pearl, btn_fracture, btn_breeze, btn_icebox, btn_bind, btn_haven, btn_split, btn_ascent).add(btn_for_new)
+
+
+btn_sidearms = KeyboardButton(text="Пістолети")
+btn_smgs = KeyboardButton(text="Пістолети-кулемети")
+btn_snipers = KeyboardButton(text="Снайперські гвинтівки")
+btn_heavies = KeyboardButton(text="Важка зброя")
+btn_shotguns = KeyboardButton(text="Дробовики")
+btn_rifles = KeyboardButton(text="Гвинтівки")
+btn_melee = KeyboardButton(text="Холодна зброя")
+weapons = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+weapons.add(btn_sidearms, btn_smgs, btn_snipers, btn_heavies).row(btn_shotguns, btn_rifles, btn_melee).add(btn_for_new)
+
+
+
+btn_classic = KeyboardButton(text="CLASSIC")
+btn_shorty = KeyboardButton(text="SHORTY")
+btn_frenzy = KeyboardButton(text="FRENZY")
+btn_ghost = KeyboardButton(text="GHOST")
+btn_sheriff = KeyboardButton(text="SHERIFF")
+sidearms = ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
+sidearms.add(btn_classic, btn_shorty, btn_frenzy, btn_ghost, btn_sheriff).add(btn_gun)
+
+
+btn_stinger = KeyboardButton(text="STINGER")
+btn_spectre = KeyboardButton(text="SPECTRE")
+smgs = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+smgs.add(btn_stinger, btn_spectre).add(btn_gun)
+
+
+btn_bucky = KeyboardButton(text="BUCKY")
+btn_judge = KeyboardButton(text="JUDGE")
+shotguns = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+shotguns.add(btn_bucky, btn_judge).add(btn_gun)
+
+
+btn_bulldog = KeyboardButton(text="BULLDOG")
+btn_guardian = KeyboardButton(text="GUARDIAN")
+btn_phantom = KeyboardButton(text="PHANTOM")
+btn_vandal = KeyboardButton(text="VANDAL")
+rifles = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+rifles.add(btn_bulldog, btn_guardian, btn_phantom, btn_vandal).add(btn_gun)
+
+
+btn_marshal = KeyboardButton(text="MARSHAL")
+btn_operator = KeyboardButton(text="OPERATOR")
+snipers = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+snipers.add(btn_marshal, btn_operator).add(btn_gun)
+
+
+btn_ares = KeyboardButton(text="ARES")
+btn_odin = KeyboardButton(text="ODIN")
+heavies = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+heavies.add(btn_ares, btn_odin).add(btn_gun)
+
+btn_knife = KeyboardButton(text="Тактичний ніж")
+melee = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+melee.add(btn_knife).add(btn_gun)

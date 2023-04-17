@@ -7,6 +7,10 @@ class Maps(ABC):
     def photos(self):
         pass
 
+    @abstractmethod
+    def inf(self):
+        pass
+
 
 class Lotus(Maps):
     def photos(self):
@@ -19,6 +23,11 @@ class Lotus(Maps):
             InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltdb487ae5810363a7/63b8a8056e04e50b40ff66fe/Lotus_Screenshot_5.jpg?auto=webp&width=915'),
         ]
         return photo
+
+    def inf(self):
+        inf = "Таємнича споруда, в якій знаходиться астральний канал, випромінює древню силу. " \
+              "Великі кам'яні двері забезпечують різноманітні можливості пересування і відкривають шляхи до трьох таємничих місць."
+        return inf
 
 
 class Pearl(Maps):
@@ -33,6 +42,11 @@ class Pearl(Maps):
         ]
         return photo
 
+    def inf(self):
+        inf = "Ця карта з двома точками, де захисники чекають на атакувальників внизу, розташована в мальовничому підводному місті. " \
+              "На Pearl немає незвичайних механік - тільки цікавий ландшафт. Боріться на невеликому міді або в довгих бічних проходах на нашій першій карті на Землі 'Омега'."
+        return inf
+
 
 class Fracture(Maps):
     def photos(self):
@@ -45,6 +59,11 @@ class Fracture(Maps):
             InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt6632690fbfaae9a1/6131bf3a504fe365615e53c9/Fracture_Screenshot-6.jpg?auto=webp&width=464'),
         ]
         return photo
+
+    def inf(self):
+        inf = "Секретний дослідницький центр, розділений надвоє через невдалий експеримент із радіанітом. Ця незвичайна карта відкриває різні можливості для захисників: " \
+              "застаньте атакувальників зненацька на їхньому боці або задраюйте люки, щоб пережити штурм. Вибір за вами!"
+        return inf
 
 
 class Breeze(Maps):
@@ -59,6 +78,11 @@ class Breeze(Maps):
         ]
         return photo
 
+    def inf(self):
+        inf = "Ласкаво просимо в тропічний рай. Милуйтеся стародавніми руїнами, досліджуйте морські печери і приводьте з собою друзів. " \
+              "Тут на вас чекають відкрита місцевість і перестрілки на далеких дистанціях, тож допомога зайвою точно не буде. Головне - вчасно прикрити фланги."
+        return inf
+
 
 class Icebox(Maps):
     def photos(self):
@@ -71,6 +95,11 @@ class Icebox(Maps):
             InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt5afffe335e51db97/626c2e23d2794936634f95ce/04-2022-Icebox-9.jpg?auto=webp&width=473'),
         ]
         return photo
+
+    def inf(self):
+        inf = "Вам доведеться битися на покинутій секретній арктичній базі Kingdom. Точки для встановлення бомби захищені снігом і металом. Тут вам знадобляться хитрість і спритність. " \
+              "Скористайтеся тросами, щоб залишитися непоміченими або застати ворога зненацька."
+        return inf
 
 
 class Bind(Maps):
@@ -85,6 +114,11 @@ class Bind(Maps):
         ]
         return photo
 
+    def inf(self):
+        inf = "Дві точки. Ніякого міду. Куди ж іти, направо чи наліво? Що б ви не обрали, на кожному напрямку є прямий маршрут " \
+              "для нападу й односторонній телепорт для виходу за спини супротивників."
+        return inf
+
 
 class Haven(Maps):
     def photos(self):
@@ -97,6 +131,11 @@ class Haven(Maps):
             InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt768f194cd2c52f84/5eabe9862b79652f27c326ca/haven4.jpg?auto=webp&width=538'),
         ]
         return photo
+
+    def inf(self):
+        inf = "Стіни забутого монастиря стрясає шум бою агентів, які борються за контроль над трьома точками. " \
+              "Території для захоплення більше, але захисникам набагато легше агресивно пушити противника."
+        return inf
 
 
 class Split(Maps):
@@ -111,6 +150,11 @@ class Split(Maps):
         ]
         return photo
 
+    def inf(self):
+        inf = "На цій карті велике значення має зайняття висот. Дві точки відокремлює одна від одної центр з високими позиціями, на які можна швидко піднятися по мотузках. " \
+              "Контроль над кожною точкою допоможуть утримати вежі, що підносяться над ними. Не забувайте поглядати вгору."
+        return inf
+
 
 class Ascent(Maps):
     def photos(self):
@@ -124,4 +168,7 @@ class Ascent(Maps):
         ]
         return photo
 
-
+    def inf(self):
+        inf = "Дві точки Ascent відокремлені одна від одної відкритим майданчиком для дрібних позиційних сутичок і відстрілу супротивників. " \
+              "Кожна точка може бути посилена герметичними дверима; після їх активації вам знадобиться або знищити їх, або знайти інший шлях на точку. Ні кроку назад!"
+        return inf
