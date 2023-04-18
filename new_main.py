@@ -92,25 +92,25 @@ async def my_staats(message: types.Message, state: FSMContext):
     await message.answer("Оберіть потрібну статистику:", reply_markup=stats)
 
 
-@dp.message_handler(lambda message: "Змінити нікнейм" in message.text)
-async def update_nickname(message: types.Message):
-    await message.answer("Введіть новий нікнейм (Name Example#1234):")
-    await update_Stats.name.set()
-
-
-@dp.message_handler(state=update_Stats.name)
-async def update_nickname_confirm(message: types.Message, state: FSMContext):
-    async with state.proxy() as data:
-        data['name'] = message.text
-
-    conn = sqlite3.connect('user.db')
-    cursor = conn.cursor()
-    cursor.execute(f"UPDATE users SET name = '{data['name']}' WHERE id = {message.from_user.id}")
-    conn.commit()
-    conn.close()
-
-    await state.finish()
-    await message.answer(f"Новий нікнейм збережено: <b>{data['name']}</b>", parse_mode='html', reply_markup=stats)
+# @dp.message_handler(lambda message: "Змінити нікнейм" in message.text)
+# async def update_nickname(message: types.Message):
+#     await message.answer("Введіть новий нікнейм (Name Example#1234):")
+#     await update_Stats.name.set()
+#
+#
+# @dp.message_handler(state=update_Stats.name)
+# async def update_nickname_confirm(message: types.Message, state: FSMContext):
+#     async with state.proxy() as data:
+#         data['name'] = message.text
+#
+#     conn = sqlite3.connect('user.db')
+#     cursor = conn.cursor()
+#     cursor.execute(f"UPDATE users SET name = '{data['name']}' WHERE id = {message.from_user.id}")
+#     conn.commit()
+#     conn.close()
+#
+#     await state.finish()
+#     await message.answer(f"Новий нікнейм збережено: <b>{data['name']}</b>", parse_mode='html', reply_markup=stats)
 
 
 @dp.message_handler(lambda message: "Статистика за цей акт" in message.text)
@@ -1887,28 +1887,28 @@ class feedback(StatesGroup):
 
 
 
-@dp.message_handler(lambda message: "Відгук" in message.text)
-async def feedbacks(message: types.Message):
-    await message.answer("Напишіть відгук:")
-    await feedback.text.set()
-
-
-@dp.message_handler(state=feedback.text)
-async def update_nickname_confirm(message: types.Message, state: FSMContext):
-    async with state.proxy() as data:
-        data['text'] = message.text
-
-    id_user = message.from_user.id
-    name_user = message.from_user.first_name
-
-    conn = sqlite3.connect('feedbacks.db')
-    cursor = conn.cursor()
-    cursor.execute(f"INSERT INTO feedbacks (user_id, user_name, text) VALUES ({id_user}, '{name_user}', '{data['text']}')")
-    conn.commit()
-    conn.close()
-
-    await state.finish()
-    await message.answer("✅ Дякуємо за ваш відгук ✅", reply_markup=kb_help)
+# @dp.message_handler(lambda message: "Відгук" in message.text)
+# async def feedbacks(message: types.Message):
+#     await message.answer("Напишіть відгук:")
+#     await feedback.text.set()
+#
+#
+# @dp.message_handler(state=feedback.text)
+# async def update_nickname_confirm(message: types.Message, state: FSMContext):
+#     async with state.proxy() as data:
+#         data['text'] = message.text
+#
+#     id_user = message.from_user.id
+#     name_user = message.from_user.first_name
+#
+#     conn = sqlite3.connect('feedbacks.db')
+#     cursor = conn.cursor()
+#     cursor.execute(f"INSERT INTO feedbacks (user_id, user_name, text) VALUES ({id_user}, '{name_user}', '{data['text']}')")
+#     conn.commit()
+#     conn.close()
+#
+#     await state.finish()
+#     await message.answer("✅ Дякуємо за ваш відгук ✅", reply_markup=kb_help)
 
 
 
