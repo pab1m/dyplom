@@ -1,4 +1,5 @@
 import os
+import requests
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher, FSMContext
 from aiogram.utils import executor
@@ -20,6 +21,7 @@ username = []
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
+
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
     if message.from_user.last_name is None:
@@ -33,19 +35,20 @@ async def start(message: types.Message):
     await bot.send_message(message.from_user.id,
                            f"Привіт, <b>{result}</b>, я телеграм бот який допоможе тобі познайомитися із грою VALORANT"
                            f" та дізнатися інформацію про свій прогрес", parse_mode='html')
-    # await message.delete()
+    await message.delete()
     await bot.send_message(message.from_user.id, "Введіть /help щоб дізнатися мій функціонал")
 
 
 @dp.message_handler(commands=['help'])
 async def help_message(message: types.Message):
     await bot.send_message(message.from_user.id, "Доступні команди:", reply_markup=kb_help)
-    # await message.delete()
+    await message.delete()
 
 
 @dp.message_handler(lambda message: "👶🏼 Для новачків" in message.text)
 async def new_people(messsage: types.Message):
     await messsage.answer("Для новачків:", reply_markup=new_player)
+
 
 @dp.message_handler(lambda message: "⬅️ На головну" in message.text)
 async def main(messsage: types.Message):

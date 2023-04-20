@@ -198,4 +198,3 @@ def stats_last_game(names):
 
     with open(f'{names}.json', 'w') as f:
         json.dump(stats_dict, f)
-
