@@ -1,10 +1,8 @@
 import os
-import requests
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher, FSMContext
 from aiogram.utils import executor
 from aiogram.utils.exceptions import InvalidQueryID
-from aiogram.types import InputMediaPhoto
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from btn import *
@@ -24,10 +22,17 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
+    if message.from_user.last_name is None:
+        result = message.from_user.first_name
+    elif message.from_user.first_name is None:
+        result = message.from_user.last_name
+    elif message.from_user.first_name is None and message.from_user.last_name is None:
+        result = "ХТОСЬ"
+    else:
+        result = f"{message.from_user.first_name} {message.from_user.last_name}"
     await bot.send_message(message.from_user.id,
-                           f"Привіт, <b>{message.from_user.first_name if message.from_user.last_name is None else message.from_user.first_name + ' ' + message.from_user.last_name}</b>, "
-                           f"я телеграм бот який допоможе тобі познайомитися із грою VALORANT та дізнатися "
-                           "інформацію про свій прогрес", parse_mode='html')
+                           f"Привіт, <b>{result}</b>, я телеграм бот який допоможе тобі познайомитися із грою VALORANT"
+                           f" та дізнатися інформацію про свій прогрес", parse_mode='html')
     # await message.delete()
     await bot.send_message(message.from_user.id, "Введіть /help щоб дізнатися мій функціонал")
 
@@ -38,11 +43,11 @@ async def help_message(message: types.Message):
     # await message.delete()
 
 
-@dp.message_handler(lambda message: "Для новачків" in message.text)
+@dp.message_handler(lambda message: "👶🏼 Для новачків" in message.text)
 async def new_people(messsage: types.Message):
     await messsage.answer("Для новачків:", reply_markup=new_player)
 
-@dp.message_handler(lambda message: "На головну" in message.text)
+@dp.message_handler(lambda message: "⬅️ На головну" in message.text)
 async def main(messsage: types.Message):
     await messsage.answer("Для новачків:", reply_markup=kb_help)
 
@@ -55,7 +60,7 @@ class update_Stats(StatesGroup):
     name = State()
 
 
-@dp.message_handler(lambda message: "Моя статистика" in message.text)
+@dp.message_handler(lambda message: "📈 Моя статистика" in message.text)
 async def my_stats(messsage: types.Message):
     id_user = messsage.from_user.id
 
@@ -178,21 +183,46 @@ async def now_stats(messsage: types.Message):
     os.remove(f'{res[0]}.json')
 
 
-@dp.message_handler(lambda message: 'Агенти' in message.text)
+class feedback(StatesGroup):
+    text = State()
+
+
+@dp.message_handler(lambda message: "💬 Відгук" in message.text)
+async def feedbacks(message: types.Message):
+    await message.answer("Напишіть відгук:")
+    await feedback.text.set()
+
+
+@dp.message_handler(state=feedback.text)
+async def send_feedback(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        data['text'] = message.text
+
+    id_user = message.from_user.id
+    name_user = message.from_user.first_name
+
+    conn = sqlite3.connect('feedbacks.db')
+    cursor = conn.cursor()
+    cursor.execute(f"INSERT INTO feedbacks (user_id, user_name, text) VALUES ({id_user}, '{name_user}', '{data['text']}')")
+    conn.commit()
+    conn.close()
+
+    await state.finish()
+    await message.answer("✅ Дякуємо за ваш відгук ✅", reply_markup=kb_help)
+
+
+@dp.message_handler(lambda message: '👫 Агенти' in message.text)
 async def new_people(message: types.Message):
-    # await bot.delete_message(message.chat.id, message.message_id - 1)
-    # await bot.delete_message(chat_id=message.chat.id, message_id=message.message_id)
-    # await bot.delete_message(message.chat.id, message.message_id)
-
-    delete = await message.answer('Агенти:', reply_markup=agents)
-    # await delete.delete()
-    # await bot.delete_message(message.chat.id, message.message_id)
+    delete = await message.answer('Агенти:')
+    await delete.delete()
+    await bot.send_message(chat_id=message.from_user.id, text='Оберіть клас агента: ', reply_markup=agents)
 
 
-@dp.message_handler(lambda message: "СПЕЦІАЛІСТ (CONTROLLER)" in message.text)
-async def controllers(messsage: types.Message):
-    await bot.send_message(messsage.from_user.id, 'КОНТРОЛЕР (CONTROLLER)', reply_markup=controller)
-
+@dp.message_handler(lambda message: "💨 СПЕЦІАЛІСТ (CONTROLLER)" in message.text)
+async def controllers(message: types.Message):
+    delete = await bot.send_message(message.from_user.id, '💨 КОНТРОЛЕР (CONTROLLER)')
+    await delete.delete()
+    await bot.send_message(chat_id=message.from_user.id, text='Оберіть агента: ', reply_markup=controller)
 
 @dp.message_handler(text=['BRIMSTONE'])
 async def brim(message: types.Message):
@@ -260,7 +290,6 @@ async def brim(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-
 @dp.message_handler(text=['VIPER'])
 async def viper(message: types.Message):
     photo = types.InputFile('agents_images/viper.png')
@@ -325,7 +354,6 @@ async def viper(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
 
 @dp.message_handler(text=['OMEN'])
@@ -523,10 +551,11 @@ async def harbor(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-
 @dp.message_handler(lambda message: "ДУЕЛЯНТ (DUELIST)" in message.text)
-async def duelists(messsage: types.Message):
-    await bot.send_message(messsage.from_user.id, "ДУЕЛЯНТ (DUELIST)", reply_markup=duelist)
+async def duelists(message: types.Message):
+    delete = await bot.send_message(message.from_user.id, "ДУЕЛЯНТ (DUELIST)")
+    await delete.delete()
+    await bot.send_message(chat_id=message.from_user.id, text='Оберіть агента: ', reply_markup=duelist)
 
 
 @dp.message_handler(text=['PHOENIX'])
@@ -597,7 +626,6 @@ async def phoenix(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-
 @dp.message_handler(text=['REYNA'])
 async def reyna(message: types.Message):
     photo = types.InputFile('agents_images/reyna.png')
@@ -664,7 +692,6 @@ async def reyna(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-
 @dp.message_handler(text=['JETT'])
 async def jett(message: types.Message):
     photo = types.InputFile('agents_images/jett.png')
@@ -729,7 +756,6 @@ async def jett(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
 
 @dp.message_handler(text=['RAZE'])
@@ -932,8 +958,10 @@ async def neon(message: types.Message):
 
 
 @dp.message_handler(lambda message: "ВАРТОВИЙ/СТРАЖ (SENTINEL)" in message.text)
-async def sentinels(messsage: types.Message):
-    await bot.send_message(messsage.from_user.id, "ВАРТОВИЙ/СТРАЖ (SENTINEL)", reply_markup=sentinel)
+async def sentinels(message: types.Message):
+    delete = await bot.send_message(message.from_user.id, "ВАРТОВИЙ/СТРАЖ (SENTINEL)")
+    await delete.delete()
+    await bot.send_message(chat_id=message.from_user.id, text='Оберіть агента: ', reply_markup=sentinel)
 
 
 @dp.message_handler(text=['SAGE'])
@@ -1200,9 +1228,10 @@ async def chamber(message: types.Message):
 
 
 @dp.message_handler(lambda message: "ІНІЦІАТОР (INITIATOR)" in message.text)
-async def initiators(messsage: types.Message):
-    await bot.send_message(messsage.from_user.id, "ІНІЦІАТОР (INITIATOR)", reply_markup=initiatot)
-
+async def initiators(message: types.Message):
+    delete = await bot.send_message(message.from_user.id, "ІНІЦІАТОР (INITIATOR)")
+    await delete.delete()
+    await bot.send_message(chat_id=message.from_user.id, text='Оберіть агента: ', reply_markup=initiator)
 
 @dp.message_handler(text=['SOVA'])
 async def sova(message: types.Message):
@@ -1600,7 +1629,7 @@ async def gekko(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['Карти'])
+@dp.message_handler(text=['🗺 Карти'])
 async def list_maps(messsage: types.Message):
     await messsage.answer("Оберіть карту:", reply_markup=maps)
 
@@ -1677,7 +1706,7 @@ async def ascent(messsage: types.Message):
     await bot.send_message(chat_id=messsage.from_user.id, text=text)
 
 
-@dp.message_handler(text=['Зброя'])
+@dp.message_handler(text=['🔫 Зброя'])
 async def list_maps(message: types.Message):
     await message.answer("Оберіть клас зброї:", reply_markup=weapons)
 
@@ -1859,62 +1888,5 @@ async def ascent(message: types.Message):
     text = Knife().inf()
     await bot.send_media_group(chat_id=message.from_user.id, media=photo[:])
     await bot.send_message(chat_id=message.from_user.id, text=text)
-
-
-
-class feedback(StatesGroup):
-    text = State()
-
-
-@dp.message_handler(text=['Відгук'], state=feedback.text)
-async def feedbasck(message: types.Message, state: FSMContext):
-    async with state.proxy() as data:
-        data['text'] = message.text
-
-    id_user = message.from_user.id
-    name_user = message.from_user.first_name
-
-    conn = sqlite3.connect('feedbacks.db')
-    cursor = conn.cursor()
-    cursor.execute(f"INSERT INTO feedbacks (user_id, user_name, text) VALUES ({id_user}, '{name_user}', '{data['text']}')")
-    result = cursor.fetchone()
-
-    if result:
-        await message.answer("❗Дякуємо за ваш відгук❗")
-        await state.finish()
-    conn.commit()
-    conn.close()
-
-
-
-@dp.message_handler(lambda message: "Відгук" in message.text)
-async def feedbacks(message: types.Message):
-    await message.answer("Напишіть відгук:")
-    await feedback.text.set()
-
-
-@dp.message_handler(state=feedback.text)
-async def update_nickname_confirm(message: types.Message, state: FSMContext):
-    async with state.proxy() as data:
-        data['text'] = message.text
-
-    id_user = message.from_user.id
-    name_user = message.from_user.first_name
-
-    conn = sqlite3.connect('feedbacks.db')
-    cursor = conn.cursor()
-    cursor.execute(f"INSERT INTO feedbacks (user_id, user_name, text) VALUES ({id_user}, '{name_user}', '{data['text']}')")
-    conn.commit()
-    conn.close()
-
-    await state.finish()
-    await message.answer("✅ Дякуємо за ваш відгук ✅", reply_markup=kb_help)
-
-
-
-
-
-
-
 
 executor.start_polling(dp, skip_updates=True)

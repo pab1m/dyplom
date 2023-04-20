@@ -1,16 +1,16 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 
-btn_for_new = KeyboardButton(text="Для новачків")
-btn_stats = KeyboardButton(text="Моя статистика")
-btn_help = KeyboardButton(text="Відгук")
+btn_for_new = KeyboardButton(text="👶🏼 Для новачків")
+btn_stats = KeyboardButton(text="📈 Моя статистика")
+btn_help = KeyboardButton(text="💬 Відгук")
 kb_help = ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
 kb_help.row(btn_for_new, btn_stats, btn_help)
 
 
-btn_agents = KeyboardButton(text="Агенти")
-btn_maps = KeyboardButton(text="Карти")
-btn_gun = KeyboardButton(text="Зброя")
-btn_lobby = KeyboardButton(text="На головну")
+btn_agents = KeyboardButton(text="👫 Агенти")
+btn_maps = KeyboardButton(text="🗺 Карти")
+btn_gun = KeyboardButton(text="🔫 Зброя")
+btn_lobby = KeyboardButton(text="⬅️ На головну")
 new_player = ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
 new_player.add(btn_agents, btn_maps, btn_gun, btn_lobby)
 
@@ -21,7 +21,7 @@ btn_update_nic = KeyboardButton(text="Змінити нікнейм")
 stats = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
 stats.add(btn_stats_now, btn_stats_all, btn_last_5_matches, btn_update_nic).add(btn_lobby)
 
-btn_controller = KeyboardButton(text="СПЕЦІАЛІСТ (CONTROLLER)")
+btn_controller = KeyboardButton(text="💨 СПЕЦІАЛІСТ (CONTROLLER)")
 btn_duelist = KeyboardButton(text="ДУЕЛЯНТ (DUELIST)")
 btn3_sentinel = KeyboardButton(text="ВАРТОВИЙ/СТРАЖ (SENTINEL)")
 btn_initiator = KeyboardButton(text="ІНІЦІАТОР (INITIATOR)")
@@ -262,8 +262,8 @@ btn_skye = KeyboardButton(text="SKYE")
 btn_kayo = KeyboardButton(text="KAY/O")
 btn_fade = KeyboardButton(text="FADE")
 btn_gekko = KeyboardButton(text="GEKKO")
-initiatot = ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
-initiatot.add(btn_sova, btn_breach, btn_skye, btn_kayo, btn_fade, btn_gekko).add(btn_agents)
+initiator = ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
+initiator.add(btn_sova, btn_breach, btn_skye, btn_kayo, btn_fade, btn_gekko).add(btn_agents)
 
 
 info_sova = InlineKeyboardMarkup(row_width=2)

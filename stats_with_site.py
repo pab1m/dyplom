@@ -1,16 +1,13 @@
 import re
 import requests
-import uc as uc
 from bs4 import BeautifulSoup
 import lxml
 from selenium import webdriver
 import time
-from selenium.webdriver import DesiredCapabilities, ActionChains
-from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.common.by import By
 import json
 from selenium.webdriver.common.keys import Keys
-from aiogram import Bot, types
 
 
 def set_config():
