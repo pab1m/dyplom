@@ -1,5 +1,4 @@
 import os
-import requests
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher, FSMContext
 from aiogram.utils import executor
@@ -14,8 +13,9 @@ from weapons import *
 import json
 import sqlite3
 
-TOKEN = "6275163921:AAFvgDqIWHw7Lk0YnaZPBVW2rHJEjrKu_FA"
-username = []
+TOKEN = "6116724785:AAGcm_CmDMDyKb9MN74pbh04W1zdUC3olfY"
+
+# TOKEN = "5613158633:AAHCzJB1CZ1Gim6BLtuPJZ9NkDHKlsCm2p0" # токен від володі
 
 
 bot = Bot(token=TOKEN)
@@ -46,13 +46,14 @@ async def help_message(message: types.Message):
 
 
 @dp.message_handler(lambda message: "👶🏼 Для новачків" in message.text)
-async def new_people(messsage: types.Message):
-    await messsage.answer("Для новачків:", reply_markup=new_player)
+async def new_people(message: types.Message):
+    await bot.delete_message(message.from_user.id, message.message_id)
+    await message.answer("👶🏼 Для новачків:", reply_markup=new_player)
 
 
 @dp.message_handler(lambda message: "⬅️ На головну" in message.text)
 async def main(messsage: types.Message):
-    await messsage.answer("Для новачків:", reply_markup=kb_help)
+    await messsage.answer("👶🏼 Для новачків:", reply_markup=kb_help)
 
 
 class Stats(StatesGroup):
@@ -96,11 +97,10 @@ async def my_staats(message: types.Message, state: FSMContext):
         await state.finish()
     conn.commit()
     conn.close()
-
     await message.answer("Оберіть потрібну статистику:", reply_markup=stats)
 
 
-@dp.message_handler(lambda message: "Змінити нікнейм" in message.text)
+@dp.message_handler(lambda message: "🔁 Змінити нікнейм" in message.text)
 async def update_nickname(message: types.Message):
     await message.answer("Введіть новий нікнейм (Name Example#1234):")
     await update_Stats.name.set()
@@ -121,70 +121,79 @@ async def update_nickname_confirm(message: types.Message, state: FSMContext):
     await message.answer(f"Новий нікнейм збережено: <b>{data['name']}</b>", parse_mode='html', reply_markup=stats)
 
 
-@dp.message_handler(lambda message: "Статистика за цей акт" in message.text)
-async def now_stats(messsage: types.Message):
-    await messsage.answer("Завантаження статистики . . .")
-    conn = sqlite3.connect('user.db')
-    cursor = conn.cursor()
-    cursor.execute(f"SELECT name FROM users WHERE id = {messsage.from_user.id}")
-    res = cursor.fetchone()
-    stats_now(res[0])
+@dp.message_handler(lambda message: "1️⃣ Статистика за цей акт" in message.text)
+async def now_stats(message: types.Message):
+    try:
+        await message.answer("Завантаження статистики . . .")
+        conn = sqlite3.connect('user.db')
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT name FROM users WHERE id = {message.from_user.id}")
+        res = cursor.fetchone()
+        stats_now(res[0])
 
-    q = []
-    with open(f'{res[0]}.json', 'r') as f:
-        my_dict = json.load(f)
-    title_list = list(my_dict)
-    for i in range(0, 4):
-        q.append(f"{title_list[i]}: <b>{my_dict[title_list[i]]}</b>")
+        q = []
+        with open(f'{res[0]}.json', 'r') as f:
+            my_dict = json.load(f)
+        title_list = list(my_dict)
+        for i in range(0, 4):
+            q.append(f"{title_list[i]}: <b>{my_dict[title_list[i]]}</b>")
 
-    result = '\n\n'.join(q)
-    await messsage.answer(result, parse_mode='html')
-    os.remove(f'{res[0]}.json')
-
-
-@dp.message_handler(lambda message: "Статистика за всі акти" in message.text)
-async def now_stats(messsage: types.Message):
-    await messsage.answer("Завантаження статистики . . .")
-    conn = sqlite3.connect('user.db')
-    cursor = conn.cursor()
-    cursor.execute(f"SELECT name FROM users WHERE id = {messsage.from_user.id}")
-    res = cursor.fetchone()
-    stats_all(res[0])
-
-    q = []
-    with open(f'{res[0]}.json', 'r') as f:
-        my_dict = json.load(f)
-    title_list = list(my_dict)
-    for i in range(0, 4):
-        q.append(f"{title_list[i]}: <b>{my_dict[title_list[i]]}</b>")
-
-    result = '\n\n'.join(q)
-    await messsage.answer(result, parse_mode='html')
-    os.remove(f'{res[0]}.json')
+        result = '\n\n'.join(q)
+        await message.answer(result, parse_mode='html')
+        os.remove(f'{res[0]}.json')
+    except:
+        await message.answer(text=f"❗Користувача із заданим нікнеймом не існує, або профіль приватний❗")
+        os.remove(f'{res[0]}.json')
 
 
-@dp.message_handler(lambda message: "Інформація останнього матчу" in message.text)
-async def now_stats(messsage: types.Message):
-    await messsage.answer("Завантаження інформації . . .")
-    conn = sqlite3.connect('user.db')
-    cursor = conn.cursor()
-    cursor.execute(f"SELECT name FROM users WHERE id = {messsage.from_user.id}")
-    res = cursor.fetchone()
-    stats_last_game(res[0])
+@dp.message_handler(lambda message: "🔟 Статистика за всі акти" in message.text)
+async def now_stats(message: types.Message):
+    try:
+        await message.answer("Завантаження статистики . . .")
+        conn = sqlite3.connect('user.db')
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT name FROM users WHERE id = {message.from_user.id}")
+        res = cursor.fetchone()
+        stats_all(res[0])
 
-    q = []
-    with open(f'{res[0]}.json', 'r') as f:
-        my_dict = json.load(f)
-    title_list = list(my_dict)
-    q.append(f"{title_list[0]}: <b>{my_dict[title_list[0]]}</b> \n\n{title_list[1]}: <b>{my_dict[title_list[1]]}</b> "
-             f"\n\nРахунок: <b>{my_dict[title_list[2]]}:{my_dict[title_list[3]]} {'(Win)' if my_dict[title_list[2]] < my_dict[title_list[3]] else '(Defeat)' }</b> "
-             f"\n\n{title_list[4]}: <b>{my_dict[title_list[4]]}</b> \n\n{title_list[5]}: <b>{my_dict[title_list[5]]}</b>"
-             f"\n\n{title_list[6]}: <b>{my_dict[title_list[6]]}</b> \n\n{title_list[7]}: <b>{my_dict[title_list[7]]}</b>")
+        q = []
+        with open(f'{res[0]}.json', 'r') as f:
+            my_dict = json.load(f)
+        title_list = list(my_dict)
+        for i in range(0, 4):
+            q.append(f"{title_list[i]}: <b>{my_dict[title_list[i]]}</b>")
 
-    result = '\n\n'.join(q)
-    await messsage.answer(result, parse_mode='html')
-    os.remove(f'{res[0]}.json')
+        result = '\n\n'.join(q)
+        await message.answer(result, parse_mode='html')
+        os.remove(f'{res[0]}.json')
+    except:
+        await message.answer(text=f"❗Користувача із заданим нікнеймом не існує, або профіль приватний❗")
+        os.remove(f'{res[0]}.json')
 
+@dp.message_handler(lambda message: "⚔ Інформація останнього матчу" in message.text)
+async def now_stats(message: types.Message):
+    try:
+        await message.answer("Завантаження інформації . . .")
+        conn = sqlite3.connect('user.db')
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT name FROM users WHERE id = {message.from_user.id}")
+        res = cursor.fetchone()
+        stats_last_game(res[0])
+
+        q = []
+        with open(f'{res[0]}.json', 'r') as f:
+            my_dict = json.load(f)
+        title_list = list(my_dict)
+
+        q.append(f"{title_list[0]}: <b>{my_dict[title_list[0]]}</b> \n\n{title_list[1]}: <b>{my_dict[title_list[1]]}</b> "
+                 f"\n\nРахунок: <b>{my_dict[title_list[2]]}:{my_dict[title_list[3]]} {'(Win)' if my_dict[title_list[2]] > my_dict[title_list[3]] else '(Defeat)'}</b> "
+                 f"\n\n{title_list[4]}: <b>{my_dict[title_list[4]]}</b> \n\n{title_list[5]}: <b>{my_dict[title_list[5]]}</b>"
+                 f"\n\n{title_list[6]}: <b>{my_dict[title_list[6]]}</b> \n\n{title_list[7]}: <b>{my_dict[title_list[7]]}</b>")
+        result = '\n\n'.join(q)
+        await message.answer(result, parse_mode='html')
+        os.remove(f'{res[0]}.json')
+    except:
+        await message.answer(text=f"❗Користувача із заданим нікнеймом не існує, або профіль приватний❗")
 
 class feedback(StatesGroup):
     text = State()
@@ -206,7 +215,8 @@ async def send_feedback(message: types.Message, state: FSMContext):
 
     conn = sqlite3.connect('feedbacks.db')
     cursor = conn.cursor()
-    cursor.execute(f"INSERT INTO feedbacks (user_id, user_name, text) VALUES ({id_user}, '{name_user}', '{data['text']}')")
+    cursor.execute(
+        f"INSERT INTO feedbacks (user_id, user_name, text) VALUES ({id_user}, '{name_user}', '{data['text']}')")
     conn.commit()
     conn.close()
 
@@ -221,13 +231,14 @@ async def new_people(message: types.Message):
     await bot.send_message(chat_id=message.from_user.id, text='Оберіть клас агента: ', reply_markup=agents)
 
 
-@dp.message_handler(lambda message: "💨 СПЕЦІАЛІСТ (CONTROLLER)" in message.text)
+@dp.message_handler(lambda message: "💨 СПЕЦІАЛІСТ" in message.text)
 async def controllers(message: types.Message):
-    delete = await bot.send_message(message.from_user.id, '💨 КОНТРОЛЕР (CONTROLLER)')
+    delete = await bot.send_message(message.from_user.id, '💨 СПЕЦІАЛІСТ')
     await delete.delete()
     await bot.send_message(chat_id=message.from_user.id, text='Оберіть агента: ', reply_markup=controller)
 
-@dp.message_handler(text=['BRIMSTONE'])
+
+@dp.message_handler(text=['👑 BRIMSTONE'])
 async def brim(message: types.Message):
     photo = types.InputFile('agents_images/brimstone.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -256,7 +267,6 @@ async def brim(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='brim_e')
     async def ab_brim_e(callback: types.CallbackQuery):
         try:
@@ -268,7 +278,6 @@ async def brim(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='brim_c')
     async def ab_brim_c(callback: types.CallbackQuery):
         try:
@@ -279,7 +288,6 @@ async def brim(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='brim_x')
     async def ab_brim_x(callback: types.CallbackQuery):
@@ -293,7 +301,7 @@ async def brim(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['VIPER'])
+@dp.message_handler(text=['🐍 VIPER'])
 async def viper(message: types.Message):
     photo = types.InputFile('agents_images/viper.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -322,7 +330,6 @@ async def viper(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='viper_e')
     async def ab_viper_e(callback: types.CallbackQuery):
         try:
@@ -334,7 +341,6 @@ async def viper(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='viper_c')
     async def ab_viper_c(callback: types.CallbackQuery):
         try:
@@ -345,7 +351,6 @@ async def viper(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='viper_x')
     async def ab_viper_x(callback: types.CallbackQuery):
@@ -359,7 +364,7 @@ async def viper(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['OMEN'])
+@dp.message_handler(text=['🦑 OMEN'])
 async def omen(message: types.Message):
     photo = types.InputFile('agents_images/omen.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -422,7 +427,7 @@ async def omen(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['ASTRA'])
+@dp.message_handler(text=['🌟 ASTRA'])
 async def astra(message: types.Message):
     photo = types.InputFile('agents_images/astra.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -451,7 +456,6 @@ async def astra(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='astra_e')
     async def ab_astra_e(callback: types.CallbackQuery):
         try:
@@ -463,7 +467,6 @@ async def astra(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='astra_c')
     async def ab_astra_c(callback: types.CallbackQuery):
         try:
@@ -474,7 +477,6 @@ async def astra(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='astra_x')
     async def ab_astra_x(callback: types.CallbackQuery):
@@ -488,7 +490,7 @@ async def astra(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['HARBOR'])
+@dp.message_handler(text=['🌊 HARBOR'])
 async def harbor(message: types.Message):
     photo = types.InputFile('agents_images/harbor.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -517,7 +519,6 @@ async def harbor(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='harbor_e')
     async def ab_harbor_e(callback: types.CallbackQuery):
         try:
@@ -529,7 +530,6 @@ async def harbor(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='harbor_c')
     async def ab_harbor_c(callback: types.CallbackQuery):
         try:
@@ -540,7 +540,6 @@ async def harbor(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='harbor_x')
     async def ab_harbor_x(callback: types.CallbackQuery):
@@ -554,14 +553,14 @@ async def harbor(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(lambda message: "ДУЕЛЯНТ (DUELIST)" in message.text)
+@dp.message_handler(lambda message: "⚔ ДУЕЛЯНТ" in message.text)
 async def duelists(message: types.Message):
-    delete = await bot.send_message(message.from_user.id, "ДУЕЛЯНТ (DUELIST)")
+    delete = await bot.send_message(message.from_user.id, "⚔ ДУЕЛЯНТ")
     await delete.delete()
     await bot.send_message(chat_id=message.from_user.id, text='Оберіть агента: ', reply_markup=duelist)
 
 
-@dp.message_handler(text=['PHOENIX'])
+@dp.message_handler(text=['🔥 PHOENIX'])
 async def phoenix(message: types.Message):
     photo = types.InputFile('agents_images/phoenix.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -590,7 +589,6 @@ async def phoenix(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='phoenix_e')
     async def ab_phoenix_e(callback: types.CallbackQuery):
         try:
@@ -604,7 +602,6 @@ async def phoenix(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='phoenix_c')
     async def ab_phoenix_c(callback: types.CallbackQuery):
         try:
@@ -615,7 +612,6 @@ async def phoenix(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='phoenix_x')
     async def ab_phoenix_x(callback: types.CallbackQuery):
@@ -629,7 +625,7 @@ async def phoenix(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['REYNA'])
+@dp.message_handler(text=['👁 REYNA'])
 async def reyna(message: types.Message):
     photo = types.InputFile('agents_images/reyna.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -658,7 +654,6 @@ async def reyna(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='reyna_e')
     async def ab_reyna_e(callback: types.CallbackQuery):
         try:
@@ -670,7 +665,6 @@ async def reyna(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='reyna_c')
     async def ab_reyna_c(callback: types.CallbackQuery):
         try:
@@ -681,7 +675,6 @@ async def reyna(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='reyna_x')
     async def ab_reyna_x(callback: types.CallbackQuery):
@@ -695,7 +688,7 @@ async def reyna(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['JETT'])
+@dp.message_handler(text=['🌪 JETT'])
 async def jett(message: types.Message):
     photo = types.InputFile('agents_images/jett.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -724,7 +717,6 @@ async def jett(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='jett_e')
     async def ab_jett_e(callback: types.CallbackQuery):
         try:
@@ -736,7 +728,6 @@ async def jett(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='jett_c')
     async def ab_jett_c(callback: types.CallbackQuery):
         try:
@@ -747,7 +738,6 @@ async def jett(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='jett_x')
     async def ab_jett_x(callback: types.CallbackQuery):
@@ -761,7 +751,7 @@ async def jett(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['RAZE'])
+@dp.message_handler(text=['💣 RAZE'])
 async def raze(message: types.Message):
     photo = types.InputFile('agents_images/raze.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -790,7 +780,6 @@ async def raze(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='raze_e')
     async def ab_raze_e(callback: types.CallbackQuery):
         try:
@@ -802,7 +791,6 @@ async def raze(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='raze_c')
     async def ab_raze_c(callback: types.CallbackQuery):
         try:
@@ -813,7 +801,6 @@ async def raze(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='raze_x')
     async def ab_raze_x(callback: types.CallbackQuery):
@@ -827,7 +814,7 @@ async def raze(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['YORU'])
+@dp.message_handler(text=['👥 YORU'])
 async def yoru(message: types.Message):
     photo = types.InputFile('agents_images/yoru.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -856,7 +843,6 @@ async def yoru(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='yoru_e')
     async def ab_yoru_e(callback: types.CallbackQuery):
         try:
@@ -870,7 +856,6 @@ async def yoru(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='yoru_c')
     async def ab_yoru_c(callback: types.CallbackQuery):
         try:
@@ -881,7 +866,6 @@ async def yoru(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='yoru_x')
     async def ab_yoru_x(callback: types.CallbackQuery):
@@ -895,7 +879,7 @@ async def yoru(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['NEON'])
+@dp.message_handler(text=['⚡ NEON'])
 async def neon(message: types.Message):
     photo = types.InputFile('agents_images/neon.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -924,7 +908,6 @@ async def neon(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='neon_e')
     async def ab_neon_e(callback: types.CallbackQuery):
         try:
@@ -935,7 +918,6 @@ async def neon(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='neon_c')
     async def ab_neon_c(callback: types.CallbackQuery):
@@ -960,14 +942,14 @@ async def neon(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(lambda message: "ВАРТОВИЙ/СТРАЖ (SENTINEL)" in message.text)
+@dp.message_handler(lambda message: "📸 ВАРТОВИЙ" in message.text)
 async def sentinels(message: types.Message):
-    delete = await bot.send_message(message.from_user.id, "ВАРТОВИЙ/СТРАЖ (SENTINEL)")
+    delete = await bot.send_message(message.from_user.id, "📸 ВАРТОВИЙ")
     await delete.delete()
     await bot.send_message(chat_id=message.from_user.id, text='Оберіть агента: ', reply_markup=sentinel)
 
 
-@dp.message_handler(text=['SAGE'])
+@dp.message_handler(text=['💊 SAGE'])
 async def sage(message: types.Message):
     photo = types.InputFile('agents_images/sage.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -1030,7 +1012,7 @@ async def sage(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['CYPHER'])
+@dp.message_handler(text=['📷 CYPHER'])
 async def cypher(message: types.Message):
     photo = types.InputFile('agents_images/cypher.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -1059,7 +1041,6 @@ async def cypher(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='cypher_e')
     async def ab_cypher_e(callback: types.CallbackQuery):
         try:
@@ -1071,7 +1052,6 @@ async def cypher(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='cypher_c')
     async def ab_cypher_c(callback: types.CallbackQuery):
         try:
@@ -1082,7 +1062,6 @@ async def cypher(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='cypher_x')
     async def ab_cypher_x(callback: types.CallbackQuery):
@@ -1096,13 +1075,12 @@ async def cypher(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['KILLJOY'])
+@dp.message_handler(text=['🕹 KILLJOY'])
 async def killjoy(message: types.Message):
     photo = types.InputFile('agents_images/killjoy.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
     photo.clean()
     await message.answer('Оберіть категорію для ознайомлення:', reply_markup=info_kj)
-
 
     @dp.callback_query_handler(text='bio_kj')
     async def bio_kj(callback: types.CallbackQuery):
@@ -1115,7 +1093,6 @@ async def killjoy(message: types.Message):
         await callback.message.answer('Оберіть здібність:', reply_markup=abilities_kj)
         await callback.answer()
 
-
     @dp.callback_query_handler(text='kj_q')
     async def ab_kj_q(callback: types.CallbackQuery):
         try:
@@ -1126,7 +1103,6 @@ async def killjoy(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='kj_e')
     async def ab_kj_e(callback: types.CallbackQuery):
@@ -1139,7 +1115,6 @@ async def killjoy(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='kj_c')
     async def ab_kj_c(callback: types.CallbackQuery):
         try:
@@ -1150,7 +1125,6 @@ async def killjoy(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='kj_x')
     async def ab_kj_x(callback: types.CallbackQuery):
@@ -1164,7 +1138,7 @@ async def killjoy(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['CHAMBER'])
+@dp.message_handler(text=['🔫 CHAMBER'])
 async def chamber(message: types.Message):
     photo = types.InputFile('agents_images/chamber.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -1193,7 +1167,6 @@ async def chamber(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='chamber_e')
     async def ab_chamber_e(callback: types.CallbackQuery):
         try:
@@ -1205,7 +1178,6 @@ async def chamber(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='chamber_c')
     async def ab_chamber_c(callback: types.CallbackQuery):
         try:
@@ -1216,7 +1188,6 @@ async def chamber(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='chamber_x')
     async def ab_chamber_x(callback: types.CallbackQuery):
@@ -1230,13 +1201,14 @@ async def chamber(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(lambda message: "ІНІЦІАТОР (INITIATOR)" in message.text)
+@dp.message_handler(lambda message: "🎯 ІНІЦІАТОР" in message.text)
 async def initiators(message: types.Message):
-    delete = await bot.send_message(message.from_user.id, "ІНІЦІАТОР (INITIATOR)")
+    delete = await bot.send_message(message.from_user.id, "🎯 ІНІЦІАТОР")
     await delete.delete()
     await bot.send_message(chat_id=message.from_user.id, text='Оберіть агента: ', reply_markup=initiator)
 
-@dp.message_handler(text=['SOVA'])
+
+@dp.message_handler(text=['🏹 SOVA'])
 async def sova(message: types.Message):
     photo = types.InputFile('agents_images/sova.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -1265,7 +1237,6 @@ async def sova(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='sova_e')
     async def ab_sova_e(callback: types.CallbackQuery):
         try:
@@ -1277,7 +1248,6 @@ async def sova(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='sova_c')
     async def ab_sova_c(callback: types.CallbackQuery):
         try:
@@ -1288,7 +1258,6 @@ async def sova(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='sova_x')
     async def ab_sova_x(callback: types.CallbackQuery):
@@ -1302,7 +1271,7 @@ async def sova(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['BREACH'])
+@dp.message_handler(text=['💫 BREACH'])
 async def breach(message: types.Message):
     photo = types.InputFile('agents_images/breach.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -1331,7 +1300,6 @@ async def breach(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='breach_e')
     async def ab_breach_e(callback: types.CallbackQuery):
         try:
@@ -1343,7 +1311,6 @@ async def breach(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='breach_c')
     async def ab_breach_c(callback: types.CallbackQuery):
         try:
@@ -1354,7 +1321,6 @@ async def breach(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='breach_x')
     async def ab_breach_x(callback: types.CallbackQuery):
@@ -1368,7 +1334,7 @@ async def breach(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['SKYE'])
+@dp.message_handler(text=['🦜 SKYE'])
 async def skye(message: types.Message):
     photo = types.InputFile('agents_images/skye.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -1397,7 +1363,6 @@ async def skye(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='skye_e')
     async def ab_skye_e(callback: types.CallbackQuery):
         try:
@@ -1409,7 +1374,6 @@ async def skye(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='skye_c')
     async def ab_skye_c(callback: types.CallbackQuery):
         try:
@@ -1420,7 +1384,6 @@ async def skye(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='skye_x')
     async def ab_skye_x(callback: types.CallbackQuery):
@@ -1434,7 +1397,7 @@ async def skye(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['KAY/O'])
+@dp.message_handler(text=['🤖 KAY/O'])
 async def kayo(message: types.Message):
     photo = types.InputFile('agents_images/kayo.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -1463,7 +1426,6 @@ async def kayo(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='kayo_e')
     async def ab_kayo_e(callback: types.CallbackQuery):
         try:
@@ -1475,7 +1437,6 @@ async def kayo(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='kayo_c')
     async def ab_kayo_c(callback: types.CallbackQuery):
         try:
@@ -1486,7 +1447,6 @@ async def kayo(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='kayo_x')
     async def ab_kayo_x(callback: types.CallbackQuery):
@@ -1500,7 +1460,7 @@ async def kayo(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['FADE'])
+@dp.message_handler(text=['🧿 FADE'])
 async def fade(message: types.Message):
     photo = types.InputFile('agents_images/fade.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -1529,7 +1489,6 @@ async def fade(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='fade_e')
     async def ab_fade_e(callback: types.CallbackQuery):
         try:
@@ -1541,7 +1500,6 @@ async def fade(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='fade_c')
     async def ab_fade_c(callback: types.CallbackQuery):
         try:
@@ -1552,7 +1510,6 @@ async def fade(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='fade_x')
     async def ab_fade_x(callback: types.CallbackQuery):
@@ -1566,7 +1523,7 @@ async def fade(message: types.Message):
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
 
-@dp.message_handler(text=['GEKKO'])
+@dp.message_handler(text=['🐾 GEKKO'])
 async def gekko(message: types.Message):
     photo = types.InputFile('agents_images/gekko.png')
     await bot.send_photo(chat_id=message.from_user.id, photo=photo)
@@ -1595,7 +1552,6 @@ async def gekko(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='gekko_e')
     async def ab_gekko_e(callback: types.CallbackQuery):
         try:
@@ -1607,7 +1563,6 @@ async def gekko(message: types.Message):
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
 
-
     @dp.callback_query_handler(text='gekko_c')
     async def ab_gekko_c(callback: types.CallbackQuery):
         try:
@@ -1618,7 +1573,6 @@ async def gekko(message: types.Message):
             await callback.answer()
         except InvalidQueryID:
             await callback.message.answer(text=f"❗Потрібне краще підключення до інтернету❗", parse_mode='html')
-
 
     @dp.callback_query_handler(text='gekko_x')
     async def ab_gekko_x(callback: types.CallbackQuery):
@@ -1637,7 +1591,7 @@ async def list_maps(messsage: types.Message):
     await messsage.answer("Оберіть карту:", reply_markup=maps)
 
 
-@dp.message_handler(text=['LOTUS'])
+@dp.message_handler(text=['🟢 LOTUS'])
 async def lotus(messsage: types.Message):
     photo = Lotus().photos()
     text = Lotus().inf()
@@ -1645,7 +1599,7 @@ async def lotus(messsage: types.Message):
     await bot.send_message(chat_id=messsage.from_user.id, text=text)
 
 
-@dp.message_handler(text=['PEARL'])
+@dp.message_handler(text=['🔵 PEARL'])
 async def pearl(messsage: types.Message):
     photo = Pearl().photos()
     text = Pearl().inf()
@@ -1653,7 +1607,7 @@ async def pearl(messsage: types.Message):
     await bot.send_message(chat_id=messsage.from_user.id, text=text)
 
 
-@dp.message_handler(text=['FRACTURE'])
+@dp.message_handler(text=['🟠 FRACTURE'])
 async def fracture(messsage: types.Message):
     photo = Fracture().photos()
     text = Fracture().inf()
@@ -1661,15 +1615,7 @@ async def fracture(messsage: types.Message):
     await bot.send_message(chat_id=messsage.from_user.id, text=text)
 
 
-@dp.message_handler(text=['BREEZE'])
-async def breeze(messsage: types.Message):
-    photo = Breeze().photos()
-    text = Breeze().inf()
-    await bot.send_media_group(chat_id=messsage.from_user.id, media=photo[:])
-    await bot.send_message(chat_id=messsage.from_user.id, text=text)
-
-
-@dp.message_handler(text=['ICEBOX'])
+@dp.message_handler(text=['⚪ ICEBOX'])
 async def icebox(messsage: types.Message):
     photo = Icebox().photos()
     text = Icebox().inf()
@@ -1677,7 +1623,15 @@ async def icebox(messsage: types.Message):
     await bot.send_message(chat_id=messsage.from_user.id, text=text)
 
 
-@dp.message_handler(text=['BIND'])
+@dp.message_handler(text=['🟢 BREEZE'])
+async def breeze(messsage: types.Message):
+    photo = Breeze().photos()
+    text = Breeze().inf()
+    await bot.send_media_group(chat_id=messsage.from_user.id, media=photo[:])
+    await bot.send_message(chat_id=messsage.from_user.id, text=text)
+
+
+@dp.message_handler(text=['🟡 BIND'])
 async def bind(messsage: types.Message):
     photo = Bind().photos()
     text = Bind().inf()
@@ -1685,15 +1639,7 @@ async def bind(messsage: types.Message):
     await bot.send_message(chat_id=messsage.from_user.id, text=text)
 
 
-@dp.message_handler(text=['HAVEN'])
-async def haven(messsage: types.Message):
-    photo = Haven().photos()
-    text = Haven().inf()
-    await bot.send_media_group(chat_id=messsage.from_user.id, media=photo[:])
-    await bot.send_message(chat_id=messsage.from_user.id, text=text)
-
-
-@dp.message_handler(text=['SPLIT'])
+@dp.message_handler(text=['🟤 SPLIT'])
 async def split(messsage: types.Message):
     photo = Split().photos()
     text = Split().inf()
@@ -1701,10 +1647,18 @@ async def split(messsage: types.Message):
     await bot.send_message(chat_id=messsage.from_user.id, text=text)
 
 
-@dp.message_handler(text=['ASCENT'])
+@dp.message_handler(text=['🟠 ASCENT'])
 async def ascent(messsage: types.Message):
     photo = Ascent().photos()
     text = Ascent().inf()
+    await bot.send_media_group(chat_id=messsage.from_user.id, media=photo[:])
+    await bot.send_message(chat_id=messsage.from_user.id, text=text)
+
+
+@dp.message_handler(text=['🟢 HAVEN'])
+async def haven(messsage: types.Message):
+    photo = Haven().photos()
+    text = Haven().inf()
     await bot.send_media_group(chat_id=messsage.from_user.id, media=photo[:])
     await bot.send_message(chat_id=messsage.from_user.id, text=text)
 
@@ -1892,4 +1846,6 @@ async def ascent(message: types.Message):
     await bot.send_media_group(chat_id=message.from_user.id, media=photo[:])
     await bot.send_message(chat_id=message.from_user.id, text=text)
 
-executor.start_polling(dp, skip_updates=True)
+
+if __name__ == '__main__':
+    executor.start_polling(dp, skip_updates=True)

@@ -16,7 +16,7 @@ class Classic(Weapons):
     def photo(self):
         photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt25bf56ede3e3c57c/5eb281c42278aa3e8d0ba7fa/classic.png'),
                  InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/c/cc/Prime_Classic.png/revision/latest?cb=20210707141714')
-        ]
+                 ]
         return photo
 
     def inf(self):
@@ -27,10 +27,11 @@ class Classic(Weapons):
 
 class Shorty(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt7b13117b3a4912a7/5eb281ca5e05b51483afd6bc/shorty.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/b/b7/Oni_Shorty.png/revision/latest?cb=20210708101734')
-
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt7b13117b3a4912a7/5eb281ca5e05b51483afd6bc/shorty.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/b/b7/Oni_Shorty.png/revision/latest?cb=20210708101734')
+                 ]
         return photo
 
     def inf(self):
@@ -41,10 +42,11 @@ class Shorty(Weapons):
 
 class Frenzy(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt97e5c377459c2f3b/5eb281c43b09c042ddca13a1/frenzy.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/a/a4/Prime_2.0_Frenzy.png/revision/latest?cb=20210707191254')
-
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt97e5c377459c2f3b/5eb281c43b09c042ddca13a1/frenzy.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/a/a4/Prime_2.0_Frenzy.png/revision/latest?cb=20210707191254')
+                 ]
         return photo
 
     def inf(self):
@@ -56,9 +58,11 @@ class Frenzy(Weapons):
 
 class Ghost(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltc4788d390015fb7c/5eb281c4105ab84c3815e164/ghost.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/9/94/Reaver%2C_EP_5_Ghost.png/revision/latest?cb=20220809131733')
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltc4788d390015fb7c/5eb281c4105ab84c3815e164/ghost.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/9/94/Reaver%2C_EP_5_Ghost.png/revision/latest?cb=20220809131733')
+                 ]
         return photo
 
     def inf(self):
@@ -69,9 +73,11 @@ class Ghost(Weapons):
 
 class Sheriff(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt3bbed29a5475c7d4/5eb281ca2278aa3e8d0ba7fe/sheriff.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/f/fd/Reaver_Sheriff.png/revision/latest?cb=20210708103455')
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt3bbed29a5475c7d4/5eb281ca2278aa3e8d0ba7fe/sheriff.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/f/fd/Reaver_Sheriff.png/revision/latest?cb=20210708103455')
+                 ]
         return photo
 
     def inf(self):
@@ -82,9 +88,11 @@ class Sheriff(Weapons):
 
 class Stinger(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt55951cb43513b87d/5eb7c2209c5d3e37e05f27b6/stinger.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/8/88/Prelude_to_Chaos_Stinger.png/revision/latest?cb=20220622133021')
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt55951cb43513b87d/5eb7c2209c5d3e37e05f27b6/stinger.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/8/88/Prelude_to_Chaos_Stinger.png/revision/latest?cb=20220622133021')
+                 ]
         return photo
 
     def inf(self):
@@ -95,9 +103,11 @@ class Stinger(Weapons):
 
 class Spectre(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt8a6f9eb97f755412/5eb281cae11e6a13a6f613ed/spectre.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/0/02/Forsaken_Spectre.png/revision/latest?cb=20210708122041')
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt8a6f9eb97f755412/5eb281cae11e6a13a6f613ed/spectre.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/0/02/Forsaken_Spectre.png/revision/latest?cb=20210708122041')
+                 ]
         return photo
 
     def inf(self):
@@ -108,9 +118,11 @@ class Spectre(Weapons):
 
 class Bucky(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt2cd5308e8bdfcc8c/5eb281c334a9963e8f9599de/bucky.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/0/09/Ion_Bucky.png/revision/latest?cb=20201112142243')
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt2cd5308e8bdfcc8c/5eb281c334a9963e8f9599de/bucky.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/0/09/Ion_Bucky.png/revision/latest?cb=20201112142243')
+                 ]
         return photo
 
     def inf(self):
@@ -121,9 +133,11 @@ class Bucky(Weapons):
 
 class Judge(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt82404f7b88f8c612/5eb281c45050514d1a507146/judge.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/c/c6/Elderflame_Judge.png/revision/latest?cb=20210707203713')
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt82404f7b88f8c612/5eb281c45050514d1a507146/judge.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/c/c6/Elderflame_Judge.png/revision/latest?cb=20210707203713')
+                 ]
         return photo
 
     def inf(self):
@@ -134,9 +148,11 @@ class Judge(Weapons):
 
 class Bulldog(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltd4a396bf5a06e6b4/5eb281c4edfeb076e2050387/bulldog.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/0/0b/Oni_Bulldog.png/revision/latest?cb=20230307165619')
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltd4a396bf5a06e6b4/5eb281c4edfeb076e2050387/bulldog.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/0/0b/Oni_Bulldog.png/revision/latest?cb=20230307165619')
+                 ]
         return photo
 
     def inf(self):
@@ -147,9 +163,11 @@ class Bulldog(Weapons):
 
 class Guardian(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltd78ee0533f30e0a8/5eb281c4402b8b4d13a566dc/guardian.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/3/3f/Ruination_Guardian.png/revision/latest?cb=20210707184826')
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltd78ee0533f30e0a8/5eb281c4402b8b4d13a566dc/guardian.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/3/3f/Ruination_Guardian.png/revision/latest?cb=20210707184826')
+                 ]
         return photo
 
     def inf(self):
@@ -160,9 +178,11 @@ class Guardian(Weapons):
 
 class Phantom(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt04ac3b5158b8466a/5eb281caa44a154c3ef84a82/phantom.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/6/65/Oni_Phantom.png/revision/latest?cb=20200911011334')
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt04ac3b5158b8466a/5eb281caa44a154c3ef84a82/phantom.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/6/65/Oni_Phantom.png/revision/latest?cb=20200911011334')
+                 ]
         return photo
 
     def inf(self):
@@ -173,9 +193,11 @@ class Phantom(Weapons):
 
 class Vandal(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt323df4a0d8210605/5eb281cb3b09c042ddca13a5/vandal.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/9/93/ChronoVoid_Vandal.png/revision/latest?cb=20220920131637')
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt323df4a0d8210605/5eb281cb3b09c042ddca13a5/vandal.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/9/93/ChronoVoid_Vandal.png/revision/latest?cb=20220920131637')
+                 ]
         return photo
 
     def inf(self):
@@ -186,9 +208,11 @@ class Vandal(Weapons):
 
 class Marshal(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt545be89167b88e87/5eb281c4c7007e13a0530dd7/marshal.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/9/91/Sovereign_Marshal.png/revision/latest?cb=20210708101440')
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt545be89167b88e87/5eb281c4c7007e13a0530dd7/marshal.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/9/91/Sovereign_Marshal.png/revision/latest?cb=20210708101440')
+                 ]
         return photo
 
     def inf(self):
@@ -200,9 +224,11 @@ class Marshal(Weapons):
 
 class Operator(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt3e6bf41bd01ca11e/5eb281ca24400043b65016ba/operator.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/e/ed/Elderflame_Operator.png/revision/latest?cb=20210707203739')
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt3e6bf41bd01ca11e/5eb281ca24400043b65016ba/operator.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/e/ed/Elderflame_Operator.png/revision/latest?cb=20210707203739')
+                 ]
         return photo
 
     def inf(self):
@@ -213,9 +239,11 @@ class Operator(Weapons):
 
 class Ares(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt371bee690082f494/5eb281c3e11e6a13a6f613e9/ares.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/d/d5/Singularity_Ares.png/revision/latest?cb=20201010151740')
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt371bee690082f494/5eb281c3e11e6a13a6f613e9/ares.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/d/d5/Singularity_Ares.png/revision/latest?cb=20201010151740')
+                 ]
         return photo
 
     def inf(self):
@@ -226,9 +254,11 @@ class Ares(Weapons):
 
 class Odin(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt0884ed7405d3646c/5eb281c38f7a7c3f6ec725e1/odin.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/1/13/BlastX_Odin.png/revision/latest?cb=20201210133413')
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt0884ed7405d3646c/5eb281c38f7a7c3f6ec725e1/odin.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/1/13/BlastX_Odin.png/revision/latest?cb=20201210133413')
+                 ]
         return photo
 
     def inf(self):
@@ -240,9 +270,11 @@ class Odin(Weapons):
 
 class Knife(Weapons):
     def photo(self):
-        photo = [InputMediaPhoto('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt133c8372261f21a9/5eb281cbedfeb076e205038b/tactical-knife.png'),
-                 InputMediaPhoto('https://static.wikia.nocookie.net/valorant/images/7/75/RGX_11z_Pro_Blade_Level_2.png/revision/latest?cb=20211005172431')
-        ]
+        photo = [InputMediaPhoto(
+            'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt133c8372261f21a9/5eb281cbedfeb076e205038b/tactical-knife.png'),
+                 InputMediaPhoto(
+                     'https://static.wikia.nocookie.net/valorant/images/7/75/RGX_11z_Pro_Blade_Level_2.png/revision/latest?cb=20211005172431')
+                 ]
         return photo
 
     def inf(self):

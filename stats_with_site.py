@@ -31,24 +31,6 @@ def stats_now(names):
     headers = {
         "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"}
 
-    # url = "https://tracker.gg/valorant"
-    # driver.get(url=url)
-    # time.sleep(5)
-    # accept = driver.find_element(By.ID, 'onetrust-accept-btn-handler').click()
-    # time.sleep(2)
-    #
-    # find_account = driver.find_element(By.CLASS_NAME, 'search-box__bar').click()
-    # time.sleep(3)
-    #
-    # input_name = driver.find_element(By.CSS_SELECTOR, 'input[data-v-885f6ad5]')
-    # input_name.send_keys(name)
-    # time.sleep(2)
-    #
-    # # з цим це не працює
-    # # chrome_options.add_argument("--headless")
-    # account = driver.find_element(By.CLASS_NAME, 'result-set__results').click()
-    # time.sleep(3)
-
     new = []
     separator = ""
     for i in names:
@@ -67,6 +49,7 @@ def stats_now(names):
 
     new_titles = []
     name = []
+
     for title in soup.find_all("div", class_="stat align-left giant expandable"):
         value_span = title.find("span", class_="value")
         qwert = title.find("span", class_="name")
@@ -125,8 +108,11 @@ def stats_last_game(names):
     chrome_options.add_experimental_option("prefs", prefs)
     chrome_options.add_experimental_option("detach", True)
     chrome_options.add_argument("--incognito")
+    # chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
     driver = webdriver.Chrome(options=chrome_options, desired_capabilities=d)
+
+    # driver = set_config()
 
     headers = {
         "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"}
@@ -142,23 +128,14 @@ def stats_last_game(names):
 
     url = "https://tracker.gg/valorant/profile/riot/" + f"{s.replace('#', '%23')}/" + "matches"
     driver.get(url=url)
-    # driver.maximize_window()
     time.sleep(3)
-    # accept = driver.find_element(By.ID, 'onetrust-accept-btn-handler').click()
-    # time.sleep(1)
 
     soup = BeautifulSoup(driver.page_source, 'lxml')
     driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN * 1)
     time.sleep(1)
 
-
     title = ['Режим', 'Карта', 'Score1', 'Score2', 'Tracker Score', 'K/D/A', 'K/D', 'Детальніша статистика']
     data = []
-
-
-    # kd = driver.find_element(By.CSS_SELECTOR, '#app > div.trn-wrapper > div.trn-container > div > main > div.container > div > div > div.sticky.top-0.z-10 > div.trn-match-drawer__tabs > div:nth-child(2)').click()
-    # print(kd.text)
-    # time.sleep(2)
 
     for i in soup.find_all("div", class_="trn-gamereport-list__group-entries"):
         regime = i.find("div", class_="trn-match-row__text-label")
@@ -170,16 +147,16 @@ def stats_last_game(names):
 
         data.append(regime.text)
         data.append(maps.text)
-        data.append(score1.text)
-        data.append(score2.text)
+        data.append(int(score1.text))
+        data.append(int(score2.text))
         data.append(trs.text)
         data.append(kda.text)
 
     stats_dict = dict(zip(title, data))
 
-    string = str(stats_dict['Режим'])
+    string = str(stats_dict["Режим"])
     res = string.split('•')[0].strip()
-    stats_dict['Режим'] = res
+    stats_dict["Режим"] = res
 
     string2 = str(stats_dict['K/D/A'])
     res2 = re.search(r'\d+ / \d+ / \d+', string2).group(0)
@@ -192,8 +169,7 @@ def stats_last_game(names):
     stats_dict['K/D'] = formatted_kd
 
     stats_dict['Детальніша статистика'] = url
-    
-    print(stats_dict)
+
     driver.quit()
 
     with open(f'{names}.json', 'w') as f:
